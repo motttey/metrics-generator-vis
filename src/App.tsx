@@ -33,9 +33,11 @@ function App() {
       </header>
       <main className="App-main">
         <div className="container">
-          <ScatterPlot
-            data={data}
-          />
+          <div className="column">
+            <ScatterPlot
+              data={data}
+            />
+          </div>
         </div>
       </main>
     </div>

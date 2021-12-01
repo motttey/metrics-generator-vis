@@ -6,7 +6,7 @@ function ScatterPlot(props: any): any {
   const ref = useRef(null);
   const height = 800;
   const width = 800;
-  const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+  const margin = { top: 50, right: 50, bottom: 50, left: 50 };
 
   const xValue = (d: any): number => d["x"];
   const yValue = (d: any): number => d["y"];
@@ -50,6 +50,14 @@ function ScatterPlot(props: any): any {
         .attr("r", 2)
         .style("fill", "red")
         .attr("stroke", "white");
+
+      currentPath.append("g")
+        .attr("transform", "translate(0," + (height - margin.bottom) + ")")
+        .call(d3.axisBottom(xScale));
+
+      currentPath.append("g")
+        .attr("transform", "translate(" + margin.left + "," + 0 + ")")
+        .call(d3.axisLeft(yScale));
     },
     [ props.data ]
   )
