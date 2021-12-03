@@ -24,6 +24,24 @@ function App() {
 
   const data = generateData(1000, 500);
 
+  const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
+  d3.csv(iris_url).then((data: any) => {
+    const columns = data.columns;
+    const dataArray = data.map((d: any) => {
+      return Object.values(d).slice(0, 4)
+        .map((v: any) => parseFloat(v));
+    });
+
+    const labels = data.map((d: any) => {
+      const values = Object.values(d);
+      return values[values.length - 1];
+    });
+
+    console.log(columns);
+    console.log(dataArray);
+    console.log(labels);
+  });
+
   return (
     <div className="App">
       <header className="App-header">
