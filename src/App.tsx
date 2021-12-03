@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ScatterPlot from './ScatterPlot';
 import * as d3 from 'd3';
+// import * as druid from '@saehrimnir/druidjs';
 
 import './App.css';
 
@@ -24,22 +25,40 @@ function App() {
 
   const data = generateData(1000, 500);
 
+  const getPosition = (arr: any) => {
+    return {
+      x: d3.sum(arr) / arr.length,
+      y: Math.random()
+    }
+  }
+
   const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
-  d3.csv(iris_url).then((data: any) => {
-    const columns = data.columns;
-    const dataArray = data.map((d: any) => {
-      return Object.values(d).slice(0, 4)
-        .map((v: any) => parseFloat(v));
-    });
+  const [irisData, setIrisData] = useState([]);
 
-    const labels = data.map((d: any) => {
-      const values = Object.values(d);
-      return values[values.length - 1];
-    });
+  useEffect(() => {
+    d3.csv(iris_url).then((data: any) => {
+      const columns = data.columns;
+      const dataArray = data.map((d: any) => {
+        return Object.values(d).slice(0, 4)
+          .map((v: any) => parseFloat(v));
+      });
 
-    console.log(columns);
-    console.log(dataArray);
-    console.log(labels);
+      const labels = data.map((d: any) => {
+        const values = Object.values(d);
+        return values[values.length - 1];
+      });
+
+      /*
+      console.log(columns);
+      console.log(dataArray);
+      console.log(labels);
+
+      const matrix = new druid.Matrix(dataArray);
+      const pca = new druid.PCA(matrix, d=2);
+      */
+      const res = dataArray.map((d: any) => getPosition(d));
+      setIrisData(res);
+    });
   });
 
   return (
@@ -53,7 +72,7 @@ function App() {
         <div className="container">
           <div className="column">
             <ScatterPlot
-              data={data}
+              data={irisData}
             />
           </div>
         </div>

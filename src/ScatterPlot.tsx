@@ -1,7 +1,6 @@
 import * as d3 from 'd3';
 import React, { useRef, useEffect } from 'react';
 
-
 function ScatterPlot(props: any): any {
   const ref = useRef(null);
   const height = 800;
@@ -10,6 +9,9 @@ function ScatterPlot(props: any): any {
 
   const xValue = (d: any): number => d["x"];
   const yValue = (d: any): number => d["y"];
+
+  const currentPath = d3.select(ref.current)
+    .select(".plot-area");
 
   useEffect(
     () => {
@@ -29,8 +31,6 @@ function ScatterPlot(props: any): any {
         .domain([minY, maxY])
         .range([height - margin.bottom, margin.top]);
 
-      const currentPath = d3.select(ref.current)
-        .select(".plot-area");
 
       d3.select(ref.current)
         .attr("viewBox", "0 0 " + width  + " " + height)
@@ -51,13 +51,19 @@ function ScatterPlot(props: any): any {
         .style("fill", "red")
         .attr("stroke", "white");
 
-      currentPath.append("g")
-        .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-        .call(d3.axisBottom(xScale));
+      if (!currentPath.select(".axisBottom").node()) {
+        currentPath.append("g")
+          .attr("class", "axisBottom")
+          .attr("transform", "translate(0," + (height - margin.bottom) + ")")
+          .call(d3.axisBottom(xScale));
+      }
 
-      currentPath.append("g")
-        .attr("transform", "translate(" + margin.left + "," + 0 + ")")
-        .call(d3.axisLeft(yScale));
+      if (!currentPath.select(".axisLeft").node()) {
+        currentPath.append("g")
+          .attr("class", "axisLeft")
+          .attr("transform", "translate(" + margin.left + "," + 0 + ")")
+          .call(d3.axisLeft(yScale));
+      }
     },
     [ props.data ]
   )
