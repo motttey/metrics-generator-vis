@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ScatterPlot from './ScatterPlot';
 import * as d3 from 'd3';
-// import * as druid from '@saehrimnir/druidjs';
-
 import './App.css';
 
-function App() {
+const druid: any = require('@saehrimnir/druidjs');
 
+function App() {
   const generateData = (n: number, n2: number) => {
     return Array.apply(null, Array(n)).map((d, i) => {
       if (i < n2) {
@@ -27,8 +26,8 @@ function App() {
 
   const getPosition = (arr: any) => {
     return {
-      x: d3.sum(arr) / arr.length,
-      y: Math.random()
+      x: arr[0],
+      y: arr[1]
     }
   }
 
@@ -48,18 +47,17 @@ function App() {
         return values[values.length - 1];
       });
 
-      /*
       console.log(columns);
       console.log(dataArray);
       console.log(labels);
 
-      const matrix = new druid.Matrix(dataArray);
-      const pca = new druid.PCA(matrix, d=2);
-      */
-      const res = dataArray.map((d: any) => getPosition(d));
+      const matrix = new druid.Matrix.from(dataArray);
+      const pca = new druid.PCA(matrix, 2);
+      const result = pca.transform().to2dArray;
+      const res = result.map((d: any) => getPosition(d));
       setIrisData(res);
     });
-  });
+  }, []);
 
   return (
     <div className="App">
