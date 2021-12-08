@@ -5,33 +5,33 @@ import './App.css';
 
 const druid: any = require('@saehrimnir/druidjs');
 
-function App() {
-  const generateData = (n: number, n2: number) => {
-    return Array.apply(null, Array(n)).map((d, i) => {
-      if (i < n2) {
-        return {
-          "x": d3.randomNormal(1, 100)(),
-          "y": d3.randomNormal(1, 100)()
-        }
-      } else {
-        return {
-          "x": d3.randomNormal(1, 50)(),
-          "y": d3.randomNormal(1, 50)()
-        }
+const _generateData = (n: number, n2: number) => {
+  return Array.apply(null, Array(n)).map((d, i) => {
+    if (i < n2) {
+      return {
+        "x": d3.randomNormal(1, 100)(),
+        "y": d3.randomNormal(1, 100)()
       }
-    });
-  }
-
-  const data = generateData(1000, 500);
-
-  const getPosition = (arr: any) => {
-    return {
-      x: arr[0],
-      y: arr[1]
+    } else {
+      return {
+        "x": d3.randomNormal(1, 50)(),
+        "y": d3.randomNormal(1, 50)()
+      }
     }
-  }
+  });
+}
 
-  const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
+const getPosition = (arr: any) => {
+  return {
+    x: arr[0],
+    y: arr[1]
+  }
+}
+
+const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
+
+function App() {
+
   const [irisData, setIrisData] = useState([]);
 
   useEffect(() => {
