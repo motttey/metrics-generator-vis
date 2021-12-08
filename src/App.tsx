@@ -28,16 +28,31 @@ const getPosition = (arr: any) => {
   }
 }
 
+const getWeightedPos = (arr: Array<any>, wx: Array<number>, wy: Array<number>) => {
+  return {
+    x: d3.sum(arr.map((v: any, i: number) => v * wx[i])),
+    y: d3.sum(arr.map((v: any, i: number) => v * wy[i]))
+  }
+}
+
 const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
 
 function App() {
 
-  const [irisData, setIrisData] = useState([]);
+  const [dataArray, setDataArray] = useState<Array<any>>([]);
+  const [irisData, setIrisData] = useState<Array<any>>([]);
+  const [wX, setWX] = useState<Array<number>>([]);
+  const [wY, setWY] = useState<Array<number>>([]);
+
+  const randomizeWeight = (e: any) => {
+    setWX(wX.map((_: any) => Math.random()));
+    setWY(wY.map((w: any) => w + Math.random()));
+  }
 
   useEffect(() => {
     d3.csv(iris_url).then((data: any) => {
       const columns = data.columns;
-      const dataArray = data.map((d: any) => {
+      const arr = data.map((d: any) => {
         return Object.values(d).slice(0, 4)
           .map((v: any) => parseFloat(v));
       });
@@ -47,17 +62,32 @@ function App() {
         return values[values.length - 1];
       });
 
-      console.log(columns);
-      console.log(dataArray);
-      console.log(labels);
+      setDataArray(arr);
 
-      const matrix = new druid.Matrix.from(dataArray);
-      const pca = new druid.PCA(matrix, 2);
-      const result = pca.transform().to2dArray;
-      const res = result.map((d: any) => getPosition(d));
-      setIrisData(res);
+      setWX(columns.slice(0, 4).map((_: any) => Math.random()));
+      setWY(columns.slice(0, 4).map((_: any) => Math.random()));
     });
   }, []);
+
+  useEffect(() => {
+    console.log(dataArray);
+    if (dataArray.length > 0) {
+      const matrix = new druid.Matrix.from(dataArray);
+      const pca = new druid.PCA(matrix, 2);
+      const pca_res = pca.transform().to2dArray;
+      console.log(pca_res);
+    }
+  }, [dataArray])
+
+  useEffect(() => {
+    if (dataArray.length > 0) {
+      const res = dataArray.map((d: any) =>
+        getWeightedPos(d, wX, wY)
+      );
+      console.log(wY);
+      setIrisData(res);
+    }
+  }, [wX, wY])
 
   return (
     <div className="App">
@@ -68,6 +98,9 @@ function App() {
       </header>
       <main className="App-main">
         <div className="container">
+          <div className="column">
+            <button onClick={randomizeWeight}>Random</button>
+          </div>
           <div className="column">
             <ScatterPlot
               data={irisData}

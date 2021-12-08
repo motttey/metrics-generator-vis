@@ -65,7 +65,7 @@ function ScatterPlot(props: any): any {
           .call(d3.axisLeft(yScale));
       }
     },
-    [ props.data ]
+    [ props?.data ]
   )
   return (
     <svg
