@@ -13,6 +13,32 @@ function ScatterPlot(props: any): any {
   const currentPath = d3.select(ref.current)
     .select(".plot-area");
 
+  const getMergedPath = (parentSvg: any, svgName: string, className: string) => {
+      const svgClassName = svgName + "." + className;
+      if (!parentSvg.select(svgClassName).node()) {
+        parentSvg
+          .append(svgName)
+          .attr("class", className)
+      }
+      return parentSvg.select(svgClassName)
+  }
+
+  const getMergedPathData = (parentSvg: any, svgName: string, className: string, data: Array<any>) => {
+      const svgClassName = svgName + "." + className;
+
+      if (!parentSvg.selectAll(svgClassName).node()) {
+        parentSvg
+          .selectAll(svgClassName)
+          .data(data)
+          .enter()
+          .append(svgName)
+          .attr("class", className);
+      }
+      return parentSvg
+        .selectAll(svgClassName)
+        .data(data);
+  }
+
   useEffect(
     () => {
       const maxX = d3.max(props.data, xValue) || 0;
@@ -20,7 +46,6 @@ function ScatterPlot(props: any): any {
 
       const minX = d3.min(props.data, xValue) || 0;
       const minY = d3.min(props.data, yValue) || 0;
-      console.log(props.data);
 
       const xScale = d3
         .scaleLinear()
@@ -38,10 +63,7 @@ function ScatterPlot(props: any): any {
         .attr("width", "100%")
         .attr("height", "100%");
 
-      currentPath.selectAll('circle')
-        .data(props.data)
-        .enter()
-        .append("circle")
+      getMergedPathData(currentPath, "circle", "dataPoint", props.data)
         .attr("cx", (d: any) => {
           return xScale(d["x"]);
         })
@@ -49,22 +71,19 @@ function ScatterPlot(props: any): any {
           return yScale(d["y"]);
         })
         .attr("r", 2)
+        .attr("class", "dataPoint")
         .style("fill", "red")
         .attr("stroke", "white");
 
-      if (!currentPath.select(".axisBottom").node()) {
-        currentPath.append("g")
-          .attr("class", "axisBottom")
-          .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-          .call(d3.axisBottom(xScale));
-      }
+      getMergedPath(currentPath, "g", "axisBottom")
+        .attr("class", "axisBottom")
+        .attr("transform", "translate(0," + (height - margin.bottom) + ")")
+        .call(d3.axisBottom(xScale));
 
-      if (!currentPath.select(".axisLeft").node()) {
-        currentPath.append("g")
-          .attr("class", "axisLeft")
-          .attr("transform", "translate(" + margin.left + "," + 0 + ")")
-          .call(d3.axisLeft(yScale));
-      }
+      getMergedPath(currentPath, "g", "axisLeft")
+        .attr("class", "axisLeft")
+        .attr("transform", "translate(" + margin.left + "," + 0 + ")")
+        .call(d3.axisLeft(yScale));
     },
     [ props?.data ]
   )
