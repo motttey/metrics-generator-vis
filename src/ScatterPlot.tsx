@@ -20,6 +20,7 @@ function ScatterPlot(props: any): any {
 
       const minX = d3.min(props.data, xValue) || 0;
       const minY = d3.min(props.data, yValue) || 0;
+      console.log(props.data);
 
       const xScale = d3
         .scaleLinear()

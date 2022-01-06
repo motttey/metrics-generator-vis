@@ -70,24 +70,22 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(dataArray);
     if (dataArray.length > 0) {
       const matrix = new druid.Matrix.from(dataArray);
       const pca = new druid.PCA(matrix, 2);
       const pca_res = pca.transform().to2dArray;
       console.log(pca_res);
     }
-  }, [dataArray])
+  }, [dataArray]);
 
   useEffect(() => {
-    if (dataArray.length > 0) {
+    if (dataArray.length > 0 && wX.length > 0 && wY.length > 0) {
       const res = dataArray.map((d: any) =>
         getWeightedPos(d, wX, wY)
       );
-      console.log(wY);
       setIrisData(res);
     }
-  }, [wX, wY])
+  }, [wX, wY]);
 
   return (
     <div className="App">
@@ -105,6 +103,8 @@ function App() {
             <ScatterPlot
               data={irisData}
             />
+          </div>
+          <div className="column">
           </div>
         </div>
       </main>
