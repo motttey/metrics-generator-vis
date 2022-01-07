@@ -66,6 +66,11 @@ function App() {
 
       setWX(columns.slice(0, 4).map((_: any) => Math.random()));
       setWY(columns.slice(0, 4).map((_: any) => Math.random()));
+    }).catch((error: any) => {
+      console.log(error);
+      setDataArray([]);
+
+      return;
     });
   }, []);
 
