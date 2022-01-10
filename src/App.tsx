@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ScatterPlot from './ScatterPlot';
+import WeightVis from './WeightVis';
+
 import * as d3 from 'd3';
 import './App.css';
 
@@ -90,7 +92,7 @@ function App() {
       );
       setIrisData(res);
     }
-  }, [wX, wY]);
+  }, [wX, wY, dataArray]);
 
   return (
     <div className="App">
@@ -110,6 +112,14 @@ function App() {
             />
           </div>
           <div className="column">
+            <WeightVis
+              data={wX}
+            />
+          </div>
+          <div className="column">
+            <WeightVis
+              data={wY}
+            />
           </div>
         </div>
       </main>
