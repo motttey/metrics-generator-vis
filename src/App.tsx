@@ -23,13 +23,6 @@ const _generateData = (n: number, n2: number) => {
   });
 }
 
-const getPosition = (arr: any) => {
-  return {
-    x: arr[0],
-    y: arr[1]
-  }
-}
-
 const getWeightedPos = (arr: Array<any>, wx: Array<number>, wy: Array<number>) => {
   return {
     x: d3.sum(arr.map((v: any, i: number) => v * wx[i])),
@@ -57,11 +50,6 @@ function App() {
       const arr = data.map((d: any) => {
         return Object.values(d).slice(0, 4)
           .map((v: any) => parseFloat(v));
-      });
-
-      const labels = data.map((d: any) => {
-        const values = Object.values(d);
-        return values[values.length - 1];
       });
 
       setDataArray(arr);
