@@ -23,7 +23,12 @@ function ScatterPlot(props: any): any {
       return parentSvg.select(svgClassName)
   }
 
-  const getMergedPathData = (parentSvg: any, svgName: string, className: string, data: Array<any>) => {
+  const getMergedPathData = (
+    parentSvg: any,
+    svgName: string,
+    className: string,
+    data: Array<any>
+  ) => {
       const svgClassName = svgName + "." + className;
 
       if (!parentSvg.selectAll(svgClassName).node()) {

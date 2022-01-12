@@ -22,9 +22,25 @@ function WeightVis(props: any): any {
       <g className="bar-plot-area" />
     </svg>
     */
-    <div>
-      { props?.data }
-    </div>
+    <form>
+      {
+        props?.data.map((weight: number, index: number) => {
+          return (
+            <input
+              readOnly
+              style= {{
+                width: "75px",
+                margin: "5px"
+              }}
+              type="number"
+              key={index}
+              value={weight.toFixed(4)}
+            />
+          )
+        })
+
+      }
+    </form>
   );
 }
 
