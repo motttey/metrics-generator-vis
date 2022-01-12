@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Input } from '@material-ui/core';
 
 function WeightVis(props: any): any {
   const ref = useRef(null);
@@ -26,12 +27,14 @@ function WeightVis(props: any): any {
       {
         props?.data.map((weight: number, index: number) => {
           return (
-            <input
+            <Input
               readOnly
               style= {{
                 width: "75px",
-                margin: "5px"
+                margin: "5px",
+                color: "white"
               }}
+              color="primary"
               type="number"
               key={index}
               value={weight.toFixed(4)}

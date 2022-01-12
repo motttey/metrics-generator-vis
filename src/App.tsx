@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ScatterPlot from './ScatterPlot';
 import WeightVis from './WeightVis';
+import { Button } from '@material-ui/core';
 
 import * as d3 from 'd3';
 import './App.css';
@@ -92,7 +93,13 @@ function App() {
       <main className="App-main">
         <div className="container">
           <div className="column">
-            <button onClick={randomizeWeight}>Random</button>
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={randomizeWeight}
+            >
+              Random
+            </Button>
           </div>
           <div className="column">
             <ScatterPlot
