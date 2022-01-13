@@ -62,6 +62,9 @@ function ScatterPlot(props: any): any {
         .domain([minY, maxY])
         .range([height - margin.bottom, margin.top]);
 
+      const colorScale = d3.scaleOrdinal()
+        .domain(props.labels.filter((e: any, i: number, self: Array<any>) => self.indexOf(e) === i))
+        .range(d3.schemeCategory10);
 
       d3.select(ref.current)
         .attr("viewBox", "0 0 " + width  + " " + height)
@@ -77,7 +80,9 @@ function ScatterPlot(props: any): any {
         })
         .attr("r", 2)
         .attr("class", "dataPoint")
-        .style("fill", "red")
+        .style("fill", (d: any, i: number) => {
+          return colorScale(props.labels[i]);
+        })
         .attr("stroke", "white");
 
       getMergedPath(currentPath, "g", "axisBottom")

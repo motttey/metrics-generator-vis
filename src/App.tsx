@@ -37,6 +37,8 @@ function App() {
 
   const [dataArray, setDataArray] = useState<Array<any>>([]);
   const [irisData, setIrisData] = useState<Array<any>>([]);
+  const [targetValData, setTargetValData] = useState<Array<any>>([]);
+
   const [wX, setWX] = useState<Array<number>>([]);
   const [wY, setWY] = useState<Array<number>>([]);
 
@@ -49,14 +51,19 @@ function App() {
     d3.csv(iris_url).then((data: any) => {
       const columns = data.columns;
       const arr = data.map((d: any) => {
-        return Object.values(d).slice(0, 4)
+        return Object.values(d).slice(0, columns.length - 1)
           .map((v: any) => parseFloat(v));
       });
 
+      setTargetValData(data.map((d: any) => d.Species));
       setDataArray(arr);
+      // setTargetValData()
 
-      setWX(columns.slice(0, 4).map((_: any) => Math.random()));
-      setWY(columns.slice(0, 4).map((_: any) => Math.random()));
+      setWX(columns.slice(0, columns.length - 1)
+        .map((_: any) => Math.random()));
+      setWY(columns.slice(0, columns.length - 1)
+        .map((_: any) => Math.random()));
+
     }).catch((error: any) => {
       console.log(error);
       setDataArray([]);
@@ -70,7 +77,6 @@ function App() {
       const matrix = new druid.Matrix.from(dataArray);
       const pca = new druid.PCA(matrix, 2);
       const pca_res = pca.transform().to2dArray;
-      console.log(pca_res);
     }
   }, [dataArray]);
 
@@ -104,6 +110,7 @@ function App() {
           <div className="column">
             <ScatterPlot
               data={irisData}
+              labels={targetValData}
             />
           </div>
           <div className="column">
