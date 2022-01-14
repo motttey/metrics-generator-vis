@@ -1,15 +1,21 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Input } from '@material-ui/core';
 
 function WeightVis(props: any): any {
   const ref = useRef(null);
+  const [data, setData] = useState<Array<number>>([]);
 
   useEffect(
     () => {
-      console.log(props?.data)
+      setData(props?.data)
     },
     [ props?.data ]
   )
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    data[parseInt(e.target.name)] = parseFloat(e.target.value);
+    props.handleWeightChange(data);
+  }
 
   return (
     /*
@@ -25,10 +31,10 @@ function WeightVis(props: any): any {
     */
     <form>
       {
-        props?.data.map((weight: number, index: number) => {
+        data.map((weight: number, index: number) => {
           return (
             <Input
-              readOnly
+              onChange={handleChange}
               style= {{
                 width: "75px",
                 margin: "5px",
@@ -37,6 +43,7 @@ function WeightVis(props: any): any {
               color="primary"
               type="number"
               key={index}
+              name={index.toString()}
               value={weight.toFixed(4)}
             />
           )

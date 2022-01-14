@@ -42,9 +42,19 @@ function App() {
   const [wX, setWX] = useState<Array<number>>([]);
   const [wY, setWY] = useState<Array<number>>([]);
 
-  const randomizeWeight = (e: any) => {
+  const randomizeWeight = (_: any) => {
     setWX(wX.map((_: any) => Math.random()));
     setWY(wY.map((w: any) => w + Math.random()));
+  }
+
+  const handleWeightX = async (weight: Array<number>) => {
+    await setWX(weight);
+    console.log(wX);
+  }
+
+  const handleWeightY = async (weight: Array<number>) => {
+    await setWY(weight);
+    console.log(wY);
   }
 
   useEffect(() => {
@@ -81,6 +91,8 @@ function App() {
   }, [dataArray]);
 
   useEffect(() => {
+    console.log(wX);
+
     if (dataArray.length > 0 && wX.length > 0 && wY.length > 0) {
       const res = dataArray.map((d: any) =>
         getWeightedPos(d, wX, wY)
@@ -116,11 +128,13 @@ function App() {
           <div className="column">
             <WeightVis
               data={wX}
+              handleWeightChange={handleWeightX}
             />
           </div>
           <div className="column">
             <WeightVis
               data={wY}
+              handleWeightChange={handleWeightY}
             />
           </div>
         </div>
