@@ -5,7 +5,6 @@ function ScatterPlot(props: any): any {
   const ref = useRef(null);
   const height = 800;
   const width = 800;
-  const margin = { top: 50, right: 50, bottom: 50, left: 50 };
 
   const xValue = (d: any): number => d["x"];
   const yValue = (d: any): number => d["y"];
@@ -52,6 +51,8 @@ function ScatterPlot(props: any): any {
       const minX = d3.min(props.data, xValue) || 0;
       const minY = d3.min(props.data, yValue) || 0;
 
+      const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+
       const xScale = d3
         .scaleLinear()
         .domain([minX, maxX])
@@ -95,7 +96,7 @@ function ScatterPlot(props: any): any {
         .attr("transform", "translate(" + margin.left + "," + 0 + ")")
         .call(d3.axisLeft(yScale));
     },
-    [ props?.data ]
+    [ props?.data, props?.labels, currentPath ]
   )
   return (
     <svg
