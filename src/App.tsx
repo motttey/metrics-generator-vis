@@ -128,13 +128,13 @@ function App() {
           <div className="column">
             <WeightVis
               data={wX}
-              handleWeightChange={handleWeightX}
+              handleWeightChange={setWX}
             />
           </div>
           <div className="column">
             <WeightVis
               data={wY}
-              handleWeightChange={handleWeightY}
+              handleWeightChange={setWY}
             />
           </div>
         </div>

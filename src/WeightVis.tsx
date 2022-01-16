@@ -14,7 +14,7 @@ function WeightVis(props: any): any {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     data[parseInt(e.target.name)] = parseFloat(e.target.value);
-    props.handleWeightChange(data);
+    props.handleWeightChange(JSON.parse(JSON.stringify(data)));
   }
 
   return (
