@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Input } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 function WeightVis(props: any): any {
   const ref = useRef(null);
@@ -33,22 +33,20 @@ function WeightVis(props: any): any {
       {
         data.map((weight: number, index: number) => {
           return (
-            <Input
+            <TextField
               onChange={handleChange}
               style= {{
-                width: "75px",
+                width: "100px",
                 margin: "5px",
-                color: "white"
+                backgroundColor: "currentColor"
               }}
-              color="primary"
-              type="number"
               key={index}
               name={index.toString()}
               value={weight.toFixed(4)}
+              label={props.attributeLabelNameList[index] || 'unknown'}
             />
           )
         })
-
       }
     </form>
   );

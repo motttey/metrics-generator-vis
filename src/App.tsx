@@ -38,6 +38,7 @@ function App() {
   const [dataArray, setDataArray] = useState<Array<any>>([]);
   const [irisData, setIrisData] = useState<Array<any>>([]);
   const [targetValData, setTargetValData] = useState<Array<any>>([]);
+  const [attributeLabels, setAttributeLabels] = useState<Array<string>>([]);
 
   const [wX, setWX] = useState<Array<number>>([]);
   const [wY, setWY] = useState<Array<number>>([]);
@@ -68,12 +69,11 @@ function App() {
       setTargetValData(data.map((d: any) => d.Species));
       setDataArray(arr);
       // setTargetValData()
+      const attributes = columns.slice(0, columns.length - 1);
+      setAttributeLabels(attributes)
 
-      setWX(columns.slice(0, columns.length - 1)
-        .map((_: any) => Math.random()));
-      setWY(columns.slice(0, columns.length - 1)
-        .map((_: any) => Math.random()));
-
+      setWX(attributes.map((_: any) => Math.random()));
+      setWY(attributes.map((_: any) => Math.random()));
     }).catch((error: any) => {
       console.log(error);
       setDataArray([]);
@@ -128,12 +128,14 @@ function App() {
           <div className="column">
             <WeightVis
               data={wX}
+              attributeLabelNameList={attributeLabels}
               handleWeightChange={setWX}
             />
           </div>
           <div className="column">
             <WeightVis
               data={wY}
+              attributeLabelNameList={attributeLabels}
               handleWeightChange={setWY}
             />
           </div>
