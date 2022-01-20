@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ScatterPlot from './ScatterPlot';
-import WeightVis from './WeightVis';
+import WeightForm from './WeightForm';
 import { Button } from '@material-ui/core';
 
 import * as d3 from 'd3';
@@ -34,7 +34,6 @@ const getWeightedPos = (arr: Array<any>, wx: Array<number>, wy: Array<number>) =
 const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
 
 function App() {
-
   const [dataArray, setDataArray] = useState<Array<any>>([]);
   const [irisData, setIrisData] = useState<Array<any>>([]);
   const [targetValData, setTargetValData] = useState<Array<any>>([]);
@@ -126,14 +125,14 @@ function App() {
             />
           </div>
           <div className="column">
-            <WeightVis
+            <WeightForm
               data={wX}
               attributeLabelNameList={attributeLabels}
               handleWeightChange={setWX}
             />
           </div>
           <div className="column">
-            <WeightVis
+            <WeightForm
               data={wY}
               attributeLabelNameList={attributeLabels}
               handleWeightChange={setWY}

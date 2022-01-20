@@ -1,8 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField } from '@material-ui/core';
 
-function WeightVis(props: any): any {
-  const ref = useRef(null);
+function WeightForm (props: any): any {
   const [data, setData] = useState<Array<number>>([]);
 
   useEffect(
@@ -18,17 +17,6 @@ function WeightVis(props: any): any {
   }
 
   return (
-    /*
-    <svg
-      ref={ref}
-      style={{
-        height: "100px",
-        width: "100%",
-      }}
-    >
-      <g className="bar-plot-area" />
-    </svg>
-    */
     <form>
       {
         data.map((weight: number, index: number) => {
@@ -52,4 +40,4 @@ function WeightVis(props: any): any {
   );
 }
 
-export default WeightVis;
+export default WeightForm;
