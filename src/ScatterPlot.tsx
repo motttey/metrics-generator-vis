@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import React, { useRef, useEffect, useMemo } from 'react';
+import { getMergedPathData, getMergedPath } from './d3_utils'
 
 function ScatterPlot(props: any): any {
   const ref = useRef(null);
@@ -15,37 +16,6 @@ function ScatterPlot(props: any): any {
 
   const currentPath = d3.select(ref.current)
     .select(".plot-area");
-
-  const getMergedPath = (parentSvg: any, svgName: string, className: string) => {
-      const svgClassName = svgName + "." + className;
-      if (!parentSvg.select(svgClassName).node()) {
-        parentSvg
-          .append(svgName)
-          .attr("class", className)
-      }
-      return parentSvg.select(svgClassName)
-  }
-
-  const getMergedPathData = (
-    parentSvg: any,
-    svgName: string,
-    className: string,
-    data: Array<any>
-  ) => {
-      const svgClassName = svgName + "." + className;
-
-      if (!parentSvg.selectAll(svgClassName).node()) {
-        parentSvg
-          .selectAll(svgClassName)
-          .data(data)
-          .enter()
-          .append(svgName)
-          .attr("class", className);
-      }
-      return parentSvg
-        .selectAll(svgClassName)
-        .data(data);
-  }
 
   useEffect(
     () => {
@@ -100,6 +70,7 @@ function ScatterPlot(props: any): any {
     },
     [ props?.data, props?.labels, currentPath, margin ]
   )
+
   return (
     <svg
       ref={ref}
