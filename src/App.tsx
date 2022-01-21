@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ScatterPlot from './ScatterPlot';
 import WeightForm from './WeightForm';
+import WeightVis from './WeightVis';
+
 import { Button } from '@material-ui/core';
 
 import * as d3 from 'd3';
@@ -129,6 +131,10 @@ function App() {
               data={wX}
               attributeLabelNameList={attributeLabels}
               handleWeightChange={setWX}
+            />
+            <WeightVis
+              data={wX}
+              attributeLabelNameList={attributeLabels}
             />
           </div>
           <div className="column">
