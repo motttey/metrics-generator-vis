@@ -18,8 +18,11 @@ function WeightVis (props: any): any {
 
   useEffect(
     () => {
-      setData(props?.data);
-      console.log(data);
+
+      if (props?.data.length > 0)
+        setData(props?.data);
+      else
+        setData([0]); // set default
 
       const maxX: number = data.length || 0;
       const maxY: number = d3.max(data) as number || 0;

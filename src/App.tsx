@@ -8,6 +8,7 @@ import { Button } from '@material-ui/core';
 import * as d3 from 'd3';
 import './App.css';
 
+import useDeepCompareEffect from 'use-deep-compare-effect';
 const druid: any = require('@saehrimnir/druidjs');
 
 const _generateData = (n: number, n2: number) => {
@@ -49,14 +50,17 @@ function App() {
     setWY(wY.map((w: any) => w + Math.random()));
   }
 
+  const[weightObj, setWeightObj] = useState<any>({
+    "x": wX,
+    "y": wY
+  });
+
   const handleWeightX = async (weight: Array<number>) => {
     await setWX(weight);
-    console.log(wX);
   }
 
   const handleWeightY = async (weight: Array<number>) => {
     await setWY(weight);
-    console.log(wY);
   }
 
   useEffect(() => {
@@ -78,7 +82,6 @@ function App() {
     }).catch((error: any) => {
       console.log(error);
       setDataArray([]);
-
       return;
     });
   }, []);
@@ -92,15 +95,20 @@ function App() {
   }, [dataArray]);
 
   useEffect(() => {
-    console.log(wX);
+    setWeightObj({
+      "x": wX,
+      "y": wY
+    });
+  }, [wX, wY]);
 
-    if (dataArray.length > 0 && wX.length > 0 && wY.length > 0) {
+  useDeepCompareEffect(() => {
+    if (dataArray.length > 0) {
       const res = dataArray.map((d: any) =>
-        getWeightedPos(d, wX, wY)
+        getWeightedPos(d, weightObj["x"], weightObj["y"])
       );
       setIrisData(res);
     }
-  }, [wX, wY, dataArray]);
+  }, [weightObj, dataArray]);
 
   return (
     <div className="App">
@@ -142,6 +150,10 @@ function App() {
               data={wY}
               attributeLabelNameList={attributeLabels}
               handleWeightChange={setWY}
+            />
+            <WeightVis
+              data={wY}
+              attributeLabelNameList={attributeLabels}
             />
           </div>
         </div>
