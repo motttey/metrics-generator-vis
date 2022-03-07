@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { getMergedPathData, getMergedPath } from './d3_utils'
 import useDeepCompareEffect from 'use-deep-compare-effect';
 

@@ -58,7 +58,7 @@ function WeightVis (props: any): any {
         .call(d3.axisLeft(yScale));
 
       const dataWidth = (width - margin.left * 2) / (data.length * 2)
-      getMergedPathData(currentPath, "rect", "bar", props.data)
+      getMergedPathData(currentPath, "rect", "bar", data)
         .attr("x", (d: number, i: number) => xScale(i) + dataWidth/2)
         .attr("y", (d: number) => yScale(d))
         .attr("width", dataWidth)
