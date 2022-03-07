@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import React, { useRef, useEffect, useMemo } from 'react';
 import { getMergedPathData, getMergedPath } from './d3_utils'
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 function ScatterPlot(props: any): any {
   const ref = useRef(null);
@@ -17,7 +18,7 @@ function ScatterPlot(props: any): any {
   const currentPath = d3.select(ref.current)
     .select(".plot-area");
 
-  useEffect(
+  useDeepCompareEffect(
     () => {
       const maxX = d3.max(props.data, xValue) || 0;
       const maxY = d3.max(props.data, yValue) || 0;
@@ -68,7 +69,7 @@ function ScatterPlot(props: any): any {
         .attr("transform", "translate(" + margin.left + "," + 0 + ")")
         .call(d3.axisLeft(yScale));
     },
-    [ props?.data, props?.labels, currentPath, margin ]
+    [ props, currentPath, margin ]
   )
 
   return (
