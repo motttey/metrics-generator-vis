@@ -158,6 +158,11 @@ function App() {
           </div>
         </div>
       </main>
+      <footer className="App-footer">
+        <p>
+          Metrics generator
+        </p>
+      </footer>
     </div>
   );
 }
