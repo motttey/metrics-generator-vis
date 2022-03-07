@@ -16,14 +16,16 @@ function WeightVis (props: any): any {
   const currentPath = d3.select(ref.current)
     .select(".bar-plot-area");
 
+  useEffect(() => {
+    if (props?.data.length > 0)
+      setData(props?.data);
+    else
+      setData([0]); // set default
+
+  }, [ props?.data ])
+
   useEffect(
     () => {
-
-      if (props?.data.length > 0)
-        setData(props?.data);
-      else
-        setData([0]); // set default
-
       const maxX: number = data.length || 0;
       const maxY: number = d3.max(data) as number || 0;
 
@@ -69,7 +71,7 @@ function WeightVis (props: any): any {
         })
         .attr("stroke", "white");
     },
-  [ props?.data, margin, currentPath, data ]);
+  [ data, margin, currentPath ]);
 
   return (
     <svg
