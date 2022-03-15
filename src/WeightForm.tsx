@@ -12,12 +12,10 @@ function WeightForm (props: any): any {
     [ props?.data ]
   )
 
-  /*
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     data[parseInt(e.target.name)] = parseFloat(e.target.value);
     props.handleWeightChange(JSON.parse(JSON.stringify(data)));
   }
-  */
 
   const handleDragEnd = (res: any) => {
     const tmpData = Array.from(data);
@@ -38,16 +36,20 @@ function WeightForm (props: any): any {
             >
               {data.map((weight: number, index: number) => {
                 return (
-                  <Draggable key={index} draggableId={index.toString()} index={index}>
+                  <Draggable
+                    key={index}
+                    draggableId={index.toString()}
+                    index={index}
+                  >
                     {(provided) => (
                       <TextField
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        // onChange={handleChange}
+                        onChange={handleChange}
                         style= {{
                           width: "100px",
-                          margin: "5px",
+                          margin: "10px",
                           backgroundColor: "currentColor"
                         }}
                         key={index}
