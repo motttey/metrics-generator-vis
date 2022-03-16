@@ -26,7 +26,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint '**/*.@(js|ts|tsx)'"
+  },
+  "eslintConfig": {
+    "extends": [
+      "next/core-web-vitals",
+      "prettier"
+    ]
   },
   "browserslist": {
     "production": [
@@ -41,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@types/d3": "^7.1.0"
+    "@types/d3": "^7.1.0",
+    "eslint": "^8.11.0"
   }
 }
