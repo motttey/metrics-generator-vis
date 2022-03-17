@@ -29,12 +29,6 @@
     "eject": "react-scripts eject",
     "lint": "eslint '**/*.@(js|ts|tsx)'"
   },
-  "eslintConfig": {
-    "extends": [
-      "next/core-web-vitals",
-      "prettier"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -49,6 +43,9 @@
   },
   "devDependencies": {
     "@types/d3": "^7.1.0",
-    "eslint": "^8.11.0"
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.4"
   }
 }
