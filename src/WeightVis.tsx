@@ -29,8 +29,8 @@ function WeightVis (props: any): any {
       const maxX: number = data.length || 0;
       const maxY: number = d3.max(data) as number || 0;
 
-      const minX: number = 0;
-      const minY: number = d3.min(data) || 0;;
+      const minX = 0;
+      const minY: number = d3.min(data) || 0;
 
       const xScale = d3
         .scaleLinear()
