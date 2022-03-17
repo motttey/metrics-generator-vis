@@ -9,10 +9,11 @@ import * as d3 from 'd3';
 import './App.css';
 
 import useDeepCompareEffect from 'use-deep-compare-effect';
-const druid: any = require('@saehrimnir/druidjs');
+// const druid: any = require('@saehrimnir/druidjs');
 
 const _generateData = (n: number, n2: number) => {
-  return Array.apply(null, Array(n)).map((d, i) => {
+  const arr = Array(n)
+  return arr.map((d, i) => {
     if (i < n2) {
       return {
         "x": d3.randomNormal(1, 100)(),
@@ -86,6 +87,7 @@ function App() {
     });
   }, []);
 
+  /*
   useEffect(() => {
     if (dataArray.length > 0) {
       const matrix = new druid.Matrix.from(dataArray);
@@ -93,6 +95,7 @@ function App() {
       const pca_res = pca.transform().to2dArray;
     }
   }, [dataArray]);
+  */
 
   useEffect(() => {
     setWeightObj({
