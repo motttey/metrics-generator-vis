@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TextField } from '@material-ui/core';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DraggableProvided,
+  DroppableProvided
+} from 'react-beautiful-dnd';
 
 function WeightForm (props: any): any {
   const [data, setData] = useState<Array<number>>([]);
@@ -18,7 +24,10 @@ function WeightForm (props: any): any {
   }
 
   const handleDragEnd = (res: any) => {
-    const tmpData = Array.from(data);
+    if (!res.destination) {
+      return;
+    }
+    const tmpData = [...data];
     const [ reorderedData ] = tmpData.splice(res.source.index, 1)
     tmpData.splice(res.destination.index, 0, reorderedData);
 
@@ -28,7 +37,7 @@ function WeightForm (props: any): any {
   return (
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="weightForm">
-          {(provided) => (
+          {(provided: DroppableProvided) => (
             <form
               className="weightForm"
               {...provided.droppableProps}
@@ -41,7 +50,7 @@ function WeightForm (props: any): any {
                     draggableId={index.toString()}
                     index={index}
                   >
-                    {(provided) => (
+                    {(provided: DraggableProvided) => (
                       <TextField
                         ref={provided.innerRef}
                         {...provided.draggableProps}
