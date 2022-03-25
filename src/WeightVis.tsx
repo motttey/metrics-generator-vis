@@ -59,15 +59,15 @@ function WeightVis (props: any): any {
 
       const dataWidth = (width - margin.left * 2) / (data.length * 2)
       getMergedPathData(currentPath, "rect", "bar", props.data)
-        .attr("x", (d: number, i: number) => xScale(i) + dataWidth/2)
+        .attr("x", (_: number, i: number) => xScale(i) + dataWidth/2)
         .attr("y", (d: number) => yScale(d))
         .attr("width", dataWidth)
         .attr("height", (d: number) =>  {
           return height - margin.top - yScale(d);
         })
         .attr("class", "bar")
-        .style("fill", (d: any, i: number) => {
-          return d3.schemeCategory10[0]
+        .style("fill", (_: any, i: number) => {
+          return d3.schemeCategory10[i % d3.schemeCategory10.length]
         })
         .attr("stroke", "white");
     },
