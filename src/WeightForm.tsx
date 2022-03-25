@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField, List , ListItem } from '@material-ui/core';
 import {
   DragDropContext,
   Draggable,
@@ -38,8 +38,13 @@ function WeightForm (props: any): any {
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="weightForm">
           {(provided: DroppableProvided) => (
-            <form
+            <List
               className="weightForm"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                padding: 0,
+              }}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
@@ -51,27 +56,30 @@ function WeightForm (props: any): any {
                     index={index}
                   >
                     {(provided: DraggableProvided) => (
-                      <TextField
+                      <ListItem
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        onChange={handleChange}
-                        style= {{
-                          width: "100px",
-                          margin: "10px",
-                          backgroundColor: "currentColor"
-                        }}
-                        key={index}
-                        name={index.toString()}
-                        value={weight.toFixed(4)}
-                        label={props.attributeLabelNameList[index] || 'unknown'}
-                      />
+                      >
+                        <TextField
+                          onChange={handleChange}
+                          style= {{
+                            width: "100px",
+                            margin: "10px",
+                            backgroundColor: "currentColor"
+                          }}
+                          key={index}
+                          name={index.toString()}
+                          value={weight.toFixed(4)}
+                          label={props.attributeLabelNameList[index] || 'unknown'}
+                        />
+                      </ListItem>
                     )}
                   </Draggable>
                 )}
               )}
               {provided.placeholder}
-            </form>
+            </List>
           )}
         </Droppable>
       </DragDropContext>
