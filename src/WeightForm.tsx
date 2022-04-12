@@ -64,7 +64,7 @@ function WeightForm (props: any): any {
                         <TextField
                           onChange={handleChange}
                           style= {{
-                            width: "100px",
+                            width: "80px",
                             margin: "10px",
                             backgroundColor: "currentColor"
                           }}
