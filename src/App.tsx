@@ -11,6 +11,7 @@ import './App.css';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 // const druid: any = require('@saehrimnir/druidjs');
 
+/*
 const _generateData = (n: number, n2: number) => {
   const arr = Array(n)
   return arr.map((d, i) => {
@@ -27,6 +28,7 @@ const _generateData = (n: number, n2: number) => {
     }
   });
 }
+*/
 
 const getWeightedPos = (arr: Array<any>, wx: Array<number>, wy: Array<number>) => {
   return {
@@ -56,14 +58,6 @@ function App() {
     "y": wY
   });
 
-  const handleWeightX = async (weight: Array<number>) => {
-    await setWX(weight);
-  }
-
-  const handleWeightY = async (weight: Array<number>) => {
-    await setWY(weight);
-  }
-
   useEffect(() => {
     d3.csv(iris_url).then((data: any) => {
       const columns = data.columns;
@@ -86,16 +80,6 @@ function App() {
       return;
     });
   }, []);
-
-  /*
-  useEffect(() => {
-    if (dataArray.length > 0) {
-      const matrix = new druid.Matrix.from(dataArray);
-      const pca = new druid.PCA(matrix, 2);
-      const pca_res = pca.transform().to2dArray;
-    }
-  }, [dataArray]);
-  */
 
   useEffect(() => {
     setWeightObj({
