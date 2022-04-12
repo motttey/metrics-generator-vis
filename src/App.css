@@ -25,11 +25,11 @@
 }
 
 .App-main {
-  min-height: 75vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 20%;
+  padding: 0 15%;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -46,6 +46,14 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.container {
+  display: flex;
+}
+
+.column {
+  margin: 10px 25px;
 }
 
 @keyframes App-logo-spin {

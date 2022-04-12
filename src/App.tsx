@@ -123,41 +123,51 @@ function App() {
       <main className="App-main">
         <div className="container">
           <div className="column">
-            <Button
-              color="primary"
-              variant="outlined"
-              onClick={randomizeWeight}
-            >
-              Random
-            </Button>
+            <div className="row">
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={randomizeWeight}
+              >
+                Random
+              </Button>
+            </div>
+            <div className="row">
+              <ScatterPlot
+                data={irisData}
+                labels={targetValData}
+              />
+            </div>
           </div>
           <div className="column">
-            <ScatterPlot
-              data={irisData}
-              labels={targetValData}
-            />
-          </div>
-          <div className="column">
-            <WeightForm
-              data={wX}
-              attributeLabelNameList={attributeLabels}
-              handleWeightChange={setWX}
-            />
-            <WeightVis
-              data={wX}
-              attributeLabelNameList={attributeLabels}
-            />
-          </div>
-          <div className="column">
-            <WeightForm
-              data={wY}
-              attributeLabelNameList={attributeLabels}
-              handleWeightChange={setWY}
-            />
-            <WeightVis
-              data={wY}
-              attributeLabelNameList={attributeLabels}
-            />
+            <div className="row">
+              <p>
+                Weight of X Axis
+              </p>
+              <WeightForm
+                data={wX}
+                attributeLabelNameList={attributeLabels}
+                handleWeightChange={setWX}
+              />
+              <WeightVis
+                data={wX}
+                attributeLabelNameList={attributeLabels}
+              />
+            </div>
+            <div className="row">
+              <p>
+                Weight of Y Axis
+              </p>
+              <WeightForm
+                data={wY}
+                attributeLabelNameList={attributeLabels}
+                handleWeightChange={setWY}
+              />
+              <WeightVis
+                data={wY}
+                attributeLabelNameList={attributeLabels}
+              />
+            </div>
           </div>
         </div>
       </main>
