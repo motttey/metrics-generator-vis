@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ScatterPlot from './ScatterPlot';
 import WeightForm from './WeightForm';
 import WeightVis from './WeightVis';
+import OpCodeForm from './OpCodeForm';
 
 import { Button } from '@material-ui/core';
 
@@ -47,6 +48,8 @@ function App() {
 
   const [wX, setWX] = useState<Array<number>>([]);
   const [wY, setWY] = useState<Array<number>>([]);
+
+  const [operation, setOperation] = useState<string>("+");
 
   const randomizeWeight = (_: any) => {
     setWX(wX.map((_: any) => Math.random()));
@@ -137,6 +140,9 @@ function App() {
                 data={wX}
                 attributeLabelNameList={attributeLabels}
               />
+              <OpCodeForm
+                data={operation}
+              />
             </div>
             <div className="row">
               <p>
@@ -150,6 +156,9 @@ function App() {
               <WeightVis
                 data={wY}
                 attributeLabelNameList={attributeLabels}
+              />
+              <OpCodeForm
+                data={operation}
               />
             </div>
           </div>
