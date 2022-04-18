@@ -18,6 +18,9 @@ function OpCodeForm (props: any): any {
         id="operation-select"
         value={operation}
         label="Operation"
+        style= {{
+          color: "white"
+        }}
       >
         <MenuItem value={"+"}>+</MenuItem>
         <MenuItem value={"x"}>x</MenuItem>
