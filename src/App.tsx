@@ -49,7 +49,7 @@ function App() {
   const [wX, setWX] = useState<Array<number>>([]);
   const [wY, setWY] = useState<Array<number>>([]);
 
-  const [operation, setOperation] = useState<string>("+");
+  const [operation, setOperation] = useState<Array<string>>([]);
 
   const randomizeWeight = (_: any) => {
     setWX(wX.map((_: any) => Math.random()));
@@ -77,6 +77,7 @@ function App() {
 
       setWX(attributes.map((_: any) => Math.random()));
       setWY(attributes.map((_: any) => Math.random()));
+      setOperation(attributes.slice(1).map((_: any) => "+"));
     }).catch((error: any) => {
       console.log(error);
       setDataArray([]);
@@ -136,12 +137,12 @@ function App() {
                 attributeLabelNameList={attributeLabels}
                 handleWeightChange={setWX}
               />
+              <OpCodeForm
+                data={operation}
+              />
               <WeightVis
                 data={wX}
                 attributeLabelNameList={attributeLabels}
-              />
-              <OpCodeForm
-                data={operation}
               />
             </div>
             <div className="row">
@@ -153,12 +154,12 @@ function App() {
                 attributeLabelNameList={attributeLabels}
                 handleWeightChange={setWY}
               />
+              <OpCodeForm
+                data={operation}
+              />
               <WeightVis
                 data={wY}
                 attributeLabelNameList={attributeLabels}
-              />
-              <OpCodeForm
-                data={operation}
               />
             </div>
           </div>
