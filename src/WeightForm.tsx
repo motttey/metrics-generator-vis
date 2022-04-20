@@ -65,7 +65,7 @@ function WeightForm (props: any): any {
                           onChange={handleChange}
                           style= {{
                             width: "80px",
-                            margin: "10px",
+                            margin: "5px",
                             backgroundColor: "currentColor"
                           }}
                           key={index}
