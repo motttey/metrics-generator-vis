@@ -31,10 +31,40 @@ const _generateData = (n: number, n2: number) => {
 }
 */
 
-const getWeightedPos = (arr: Array<any>, wx: Array<number>, wy: Array<number>) => {
+const getOperation = (v1: number, v2: number, opCode: string) => {
+  if (opCode === "+") {
+    return v1 + v2;
+  } else if (opCode === "x") {
+    return v1 * v2;
+  } else if (opCode === "/") {
+    return v1 / v2;
+  } else {
+    return v1;
+  }
+}
+
+const getPosition = (
+  arr: Array<number>,
+  operation: Array<string>
+) => {
+  let result = 0.0;
+  arr.forEach((v: number, i: number) => {
+    if (i > 0) {
+      result = getOperation(result, v, operation[i - 1])
+    }
+  });
+  return result;
+}
+
+const getWeightedPos = (
+  arr: Array<any>,
+  wx: Array<number>,
+  wy: Array<number>,
+  operation: Array<string>
+) => {
   return {
-    x: d3.sum(arr.map((v: any, i: number) => v * wx[i])),
-    y: d3.sum(arr.map((v: any, i: number) => v * wy[i]))
+    x: getPosition(arr.map((v: any, i: number) => v * wx[i]), operation),
+    y: getPosition(arr.map((v: any, i: number) => v * wy[i]), operation),
   }
 }
 
@@ -92,10 +122,17 @@ function App() {
     });
   }, [wX, wY]);
 
+  useEffect(() => {
+    const res = dataArray.map((d: any) =>
+      getWeightedPos(d, weightObj["x"], weightObj["y"], operation)
+    );
+    setIrisData(res);
+  }, [operation]);
+
   useDeepCompareEffect(() => {
     if (dataArray.length > 0) {
       const res = dataArray.map((d: any) =>
-        getWeightedPos(d, weightObj["x"], weightObj["y"])
+        getWeightedPos(d, weightObj["x"], weightObj["y"], operation)
       );
       setIrisData(res);
     }
@@ -139,6 +176,7 @@ function App() {
               />
               <OpCodeForm
                 data={operation}
+                handleOpeChange={setOperation}
               />
               <WeightVis
                 data={wX}
@@ -156,6 +194,7 @@ function App() {
               />
               <OpCodeForm
                 data={operation}
+                handleOpeChange={setOperation}
               />
               <WeightVis
                 data={wY}
