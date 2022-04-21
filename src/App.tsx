@@ -75,7 +75,8 @@ function App() {
   const [wX, setWX] = useState<Array<number>>([]);
   const [wY, setWY] = useState<Array<number>>([]);
 
-  const [operation, setOperation] = useState<Array<string>>([]);
+  const [operationX, setOperationX] = useState<Array<string>>([]);
+  const [operationY, setOperationY] = useState<Array<string>>([]);
 
   const randomizeWeight = (_: any) => {
     setWX(wX.map((_: any) => Math.random()));
@@ -103,7 +104,9 @@ function App() {
 
       setWX(attributes.map((_: any) => Math.random()));
       setWY(attributes.map((_: any) => Math.random()));
-      setOperation(attributes.slice(1).map((_: any) => "+"));
+
+      setOperationX(attributes.slice(1).map((_: any) => "+"));
+      setOperationY(attributes.slice(1).map((_: any) => "+"));
     }).catch((error: any) => {
       console.log(error);
       setDataArray([]);
@@ -119,18 +122,26 @@ function App() {
   }, [wX, wY]);
 
   useEffect(() => {
-    const res = dataArray.map((d: any) => new Object({
-      x: getWeightedPos(d, weightObj["x"], operation),
-      y: getWeightedPos(d, weightObj["y"], operation)
+    const res = dataArray.map((d: any, i: number) => new Object({
+      x: getWeightedPos(d, weightObj["x"], operationX),
+      y: irisData[i].y
     }));
     setIrisData(res);
-  }, [operation]);
+  }, [operationX]);
+
+  useEffect(() => {
+    const res = dataArray.map((d: any, i: number) => new Object({
+      x: irisData[i].x,
+      y: getWeightedPos(d, weightObj["y"], operationY)
+    }));
+    setIrisData(res);
+  }, [operationY]);
 
   useDeepCompareEffect(() => {
     if (dataArray.length > 0) {
       const res = dataArray.map((d: any) => new Object({
-        x: getWeightedPos(d, weightObj["x"], operation),
-        y: getWeightedPos(d, weightObj["y"], operation)
+        x: getWeightedPos(d, weightObj["x"], operationX),
+        y: getWeightedPos(d, weightObj["y"], operationY)
       }));
       setIrisData(res);
     }
@@ -173,8 +184,8 @@ function App() {
                 handleWeightChange={setWX}
               />
               <OpCodeForm
-                data={operation}
-                handleOpeChange={setOperation}
+                data={operationX}
+                handleOpeChange={setOperationX}
               />
               <WeightVis
                 data={wX}
@@ -191,8 +202,8 @@ function App() {
                 handleWeightChange={setWY}
               />
               <OpCodeForm
-                data={operation}
-                handleOpeChange={setOperation}
+                data={operationY}
+                handleOpeChange={setOperationY}
               />
               <WeightVis
                 data={wY}
