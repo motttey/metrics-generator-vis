@@ -58,14 +58,10 @@ const getPosition = (
 
 const getWeightedPos = (
   arr: Array<any>,
-  wx: Array<number>,
-  wy: Array<number>,
+  w: Array<number>,
   operation: Array<string>
 ) => {
-  return {
-    x: getPosition(arr.map((v: any, i: number) => v * wx[i]), operation),
-    y: getPosition(arr.map((v: any, i: number) => v * wy[i]), operation),
-  }
+  return getPosition(arr.map((v: any, i: number) => v * w[i]), operation)
 }
 
 const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
@@ -123,17 +119,19 @@ function App() {
   }, [wX, wY]);
 
   useEffect(() => {
-    const res = dataArray.map((d: any) =>
-      getWeightedPos(d, weightObj["x"], weightObj["y"], operation)
-    );
+    const res = dataArray.map((d: any) => new Object({
+      x: getWeightedPos(d, weightObj["x"], operation),
+      y: getWeightedPos(d, weightObj["y"], operation)
+    }));
     setIrisData(res);
   }, [operation]);
 
   useDeepCompareEffect(() => {
     if (dataArray.length > 0) {
-      const res = dataArray.map((d: any) =>
-        getWeightedPos(d, weightObj["x"], weightObj["y"], operation)
-      );
+      const res = dataArray.map((d: any) => new Object({
+        x: getWeightedPos(d, weightObj["x"], operation),
+        y: getWeightedPos(d, weightObj["y"], operation)
+      }));
       setIrisData(res);
     }
   }, [weightObj, dataArray]);
