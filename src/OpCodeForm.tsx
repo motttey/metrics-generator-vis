@@ -5,9 +5,17 @@ import { FormControl, List, ListItem, MenuItem, Select } from '@material-ui/core
 function OpCodeForm (props: any): any {
   const [operation, setOperation] = useState<Array<string>>([]);
 
+  const handleSelect = (
+    e: React.MouseEvent<HTMLElement>,
+    code: string,
+    index: number
+  ) => {
+    operation[index] = code;
+    props.handleOpeChange(JSON.parse(JSON.stringify(operation)));
+  }
+
   useEffect(
     () => {
-      console.log(props?.data)
       setOperation(props?.data)
     },
     [ props?.data ]
@@ -31,16 +39,27 @@ function OpCodeForm (props: any): any {
             <FormControl fullWidth>
               <Select
                 id="operation-select"
-                value={op}
                 label="Operation"
                 style= {{
                   color: "white"
                 }}
                 color="secondary"
+                name={index.toString()}
+                value={op}
               >
-                <MenuItem value={"+"}>+</MenuItem>
-                <MenuItem value={"x"}>x</MenuItem>
-                <MenuItem value={"/"}>/</MenuItem>
+                {
+                  ["+", "x", "/"].map((code: string, i: number) => {
+                    return (
+                      <MenuItem
+                        key={i}
+                        value={code}
+                        onClick={(event) => handleSelect(event, code, index)}
+                      >
+                        {code}
+                      </MenuItem>
+                    )
+                  })
+                }
               </Select>
             </FormControl>
           </ListItem>
