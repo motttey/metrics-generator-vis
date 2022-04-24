@@ -66,8 +66,9 @@ function WeightVis (props: any): any {
           return height - margin.top - yScale(d);
         })
         .attr("class", "bar")
-        .style("fill", (_: any, i: number) => {
-          return d3.schemeCategory10[i % d3.schemeCategory10.length]
+        .style("fill", (_: any) => {
+          // return d3.schemeCategory10[i % d3.schemeCategory10.length]
+          return d3.schemeCategory10[0]
         })
         .attr("stroke", "white");
     },
