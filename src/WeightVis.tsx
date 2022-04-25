@@ -71,6 +71,17 @@ function WeightVis (props: any): any {
           return d3.schemeCategory10[0]
         })
         .attr("stroke", "white");
+
+      const brushY = d3.brushY()
+        .extent([[0,0],[200,200]])
+
+      const brushes = getMergedPathData(currentPath, "g", "brushes", props.data)
+        .attr("class","brushes")
+        .call(brushY)
+        .call(brushY.move, (d: number, i: number) => [
+          [xScale(i) + dataWidth / 2, yScale(0)],
+          [xScale(i) + dataWidth, yScale(d)]
+        ]);
     },
   [ props?.data, margin, currentPath, data ]);
 
