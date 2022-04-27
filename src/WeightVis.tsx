@@ -79,6 +79,22 @@ function WeightVis (props: any): any {
             [xScale(i) + dataWidth/2, 0],
             [xScale(i) + dataWidth * 1.5, 400]
           ]
+        })
+        .on("brush", (t: any, e: any) => {
+          console.log(t);
+          const d = t.selection;
+          if (!e.selection) return;
+
+          // 上半分
+          if (e.selection[0] <= 0 && e.selection[1] <= 0) {
+            d[1] = [d[1][0], 0];
+            d[0] = [d[0][0], e.selection[0]];
+          } else {
+            d[1] = [d[1][0], e.selection[1]];
+            d[0] = [d[0][0], 0];
+          }
+
+          // selectionをinvertする
         });
 
       getMergedPathData(currentPath, "g", "brushes", props.data)
