@@ -80,11 +80,12 @@ function WeightVis (props: any): any {
             [xScale(i) + dataWidth * 1.5, 400]
           ]
         })
-        .on("brush", (t: any, e: any) => {
+        .on("end", (t: any, d: any) => {
+          const selection = t.selection;
+          const newRange = [0, height - margin.top - selection[0]]
+          const index = data.indexOf(d);
           console.log(t);
-          const d = t.selection;
-          if (!e.selection) return;
-
+          /*
           // 上半分
           if (e.selection[0] <= 0 && e.selection[1] <= 0) {
             d[1] = [d[1][0], 0];
@@ -93,15 +94,14 @@ function WeightVis (props: any): any {
             d[1] = [d[1][0], e.selection[1]];
             d[0] = [d[0][0], 0];
           }
-
-          // selectionをinvertする
+          */
         });
 
       getMergedPathData(currentPath, "g", "brushes", props.data)
         .attr("class","brushes")
         .call(brushY)
         .call(brushY.move, (d: number) => {
-          return (d>0)? [d, 0].map(yScale): [0, d].map(yScale);
+          return (d > 0)? [d, 0].map(yScale): [0, d].map(yScale);
         });
     },
   [ props?.data, margin, currentPath, data ]);
