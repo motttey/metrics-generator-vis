@@ -73,35 +73,27 @@ function WeightVis (props: any): any {
         .attr("stroke", "white");
 
       // bar chartの上にbrushを追加
-      const brushY =  d3.brushY()
-        .extent(function (d: any, i: number) {
-          return [
-            [xScale(i) + dataWidth/2, 0],
-            [xScale(i) + dataWidth * 1.5, 400]
-          ]
-        })
-        .on("end", (t: any, d: any) => {
-          const selection = t.selection;
-          const newRange = [0, height - margin.top - selection[0]]
-          const index = data.indexOf(d);
-          console.log(t);
-          /*
-          // 上半分
-          if (e.selection[0] <= 0 && e.selection[1] <= 0) {
-            d[1] = [d[1][0], 0];
-            d[0] = [d[0][0], e.selection[0]];
-          } else {
-            d[1] = [d[1][0], e.selection[1]];
-            d[0] = [d[0][0], 0];
-          }
-          */
-        });
-
       getMergedPathData(currentPath, "g", "brushes", props.data)
         .attr("class","brushes")
-        .call(brushY)
-        .call(brushY.move, (d: number) => {
-          return (d > 0)? [d, 0].map(yScale): [0, d].map(yScale);
+        .attr("id", (d: any, i: number) => i.toString())
+        .each((t: any, idx: number, n: any) =>  {
+          const brushY =  d3.brushY()
+            .extent([
+              [xScale(idx) + dataWidth/2, 0],
+              [xScale(idx) + dataWidth * 1.5, 400]
+            ])
+            .on("end", (t: any) => {
+              const selection = t.selection;
+              const newRange = [0, height - margin.top - selection[0]]
+
+              console.log(idx, newRange);
+            });
+
+          d3.select(n[idx])
+            .call(brushY)
+            .call(brushY.move, (d: number) => {
+              return (d > 0)? [d, 0].map(yScale): [0, d].map(yScale);
+            })
         });
     },
   [ props?.data, margin, currentPath, data ]);
