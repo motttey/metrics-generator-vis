@@ -16,6 +16,14 @@ function WeightVis (props: any): any {
   const currentPath = d3.select(ref.current)
     .select(".bar-plot-area");
 
+  const handleChange = (i: number, d: any) => {
+    // k有効数字3けたまでで一致する
+    if (data[i] && d.toFixed(3) != data[i].toFixed(3)) {
+      data[i] = d;
+      props.handleWeightChange(JSON.parse(JSON.stringify(data)));
+    }
+  }
+
   useEffect(() => {
     if (props?.data.length > 0)
       setData(props?.data);
@@ -80,13 +88,13 @@ function WeightVis (props: any): any {
           const brushY =  d3.brushY()
             .extent([
               [xScale(idx) + dataWidth/2, 0],
-              [xScale(idx) + dataWidth * 1.5, 400]
+              [xScale(idx) + dataWidth * 1.5, height]
             ])
-            .on("end", (t: any) => {
+            .on("end", (t: any, d: number) => {
               const selection = t.selection;
-              const newRange = [0, height - margin.top - selection[0]]
-
-              console.log(idx, newRange);
+              if (selection && selection[0] != 0) {
+                handleChange(idx, yScale.invert(selection[0]));
+              }
             });
 
           d3.select(n[idx])

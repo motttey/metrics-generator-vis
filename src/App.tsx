@@ -190,6 +190,7 @@ function App() {
               <WeightVis
                 data={wX}
                 attributeLabelNameList={attributeLabels}
+                handleWeightChange={setWX}
               />
             </div>
             <div className="row">
@@ -208,6 +209,7 @@ function App() {
               <WeightVis
                 data={wY}
                 attributeLabelNameList={attributeLabels}
+                handleWeightChange={setWY}
               />
             </div>
           </div>
