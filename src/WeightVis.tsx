@@ -83,21 +83,21 @@ function WeightVis (props: any): any {
       // bar chartの上にbrushを追加
       getMergedPathData(currentPath, "g", "brushes", props.data)
         .attr("class","brushes")
-        .attr("id", (d: any, i: number) => i.toString())
-        .each((t: any, idx: number, n: any) =>  {
+        .attr("id", (_: any, i: number) => i.toString())
+        .each((_: any, idx: number, arr: any) =>  {
           const brushY =  d3.brushY()
             .extent([
               [xScale(idx) + dataWidth/2, 0],
               [xScale(idx) + dataWidth * 1.5, height]
             ])
-            .on("end", (t: any, d: number) => {
-              const selection = t.selection;
+            .on("end", (_self: any, _: any) => {
+              const selection = _self.selection;
               if (selection && selection[0] != 0) {
                 handleChange(idx, yScale.invert(selection[0]));
               }
             });
 
-          d3.select(n[idx])
+          d3.select(arr[idx])
             .call(brushY)
             .call(brushY.move, (d: number) => {
               return (d > 0)? [d, 0].map(yScale): [0, d].map(yScale);
