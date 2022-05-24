@@ -4,7 +4,8 @@ import WeightForm from './WeightForm';
 import WeightVis from './WeightVis';
 import OpCodeForm from './OpCodeForm';
 
-import { Button } from '@material-ui/core';
+import { Button, ThemeProvider } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 
 import * as d3 from 'd3';
 import './App.css';
@@ -66,6 +67,15 @@ const getWeightedPos = (
 
 const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#ffffff",
+      contrastText: "#282c34"
+    }
+  }
+})
+
 function App() {
   const [dataArray, setDataArray] = useState<Array<any>>([]);
   const [irisData, setIrisData] = useState<Array<any>>([]);
@@ -98,7 +108,6 @@ function App() {
 
       setTargetValData(data.map((d: any) => d.Species));
       setDataArray(arr);
-      // setTargetValData()
       const attributes = columns.slice(0, columns.length - 1);
       setAttributeLabels(attributes)
 
@@ -153,19 +162,21 @@ function App() {
         <p>
           Metrics Generator
         </p>
+        <div className="row">
+          <ThemeProvider theme={theme}>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={randomizeWeight}
+            >
+              Random
+            </Button>
+          </ThemeProvider>
+        </div>
       </header>
       <main className="App-main">
         <div className="container">
           <div className="column">
-            <div className="row">
-              <Button
-                color="primary"
-                variant="outlined"
-                onClick={randomizeWeight}
-              >
-                Random
-              </Button>
-            </div>
             <div className="row">
               <ScatterPlot
                 data={irisData}
