@@ -159,10 +159,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
+        <h1 style={{textDecoration: "underline"}}>
           Metrics Generator
-        </p>
-        <div className="row">
+        </h1>
+        <div>
           <ThemeProvider theme={theme}>
             <Button
               color="primary"
@@ -186,9 +186,9 @@ function App() {
           </div>
           <div className="column">
             <div className="row">
-              <p>
+              <h5>
                 Weight of X Axis
-              </p>
+              </h5>
               <WeightForm
                 data={wX}
                 attributeLabelNameList={attributeLabels}
@@ -205,9 +205,9 @@ function App() {
               />
             </div>
             <div className="row">
-              <p>
+              <h5>
                 Weight of Y Axis
-              </p>
+              </h5>
               <WeightForm
                 data={wY}
                 attributeLabelNameList={attributeLabels}
@@ -227,9 +227,9 @@ function App() {
         </div>
       </main>
       <footer className="App-footer">
-        <p>
+        <h6>
           Metrics generator
-        </p>
+        </h6>
       </footer>
     </div>
   );
