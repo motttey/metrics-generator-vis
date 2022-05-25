@@ -6,7 +6,7 @@ function WeightVis (props: any): any {
   const ref = useRef(null);
   const [data, setData] = useState<Array<number>>([]);
 
-  const height = 400;
+  const height = 300;
   const width = 2000;
 
   const margin = useMemo(() => {
@@ -60,11 +60,13 @@ function WeightVis (props: any): any {
         .attr("transform", "translate(0," + (height - margin.bottom) + ")")
         .call(d3.axisBottom(xScale));
 
+      /*
       getMergedPath(currentPath, "g", "axisLeft")
         .attr("class", "axisLeft")
         .attr("transform", "translate(" + margin.left + "," + 0 + ")")
         .call(d3.axisLeft(yScale));
-
+      */
+      
       const dataWidth = (width - margin.left * 2) / (data.length * 2)
       getMergedPathData(currentPath, "rect", "bar", props.data)
         .attr("x", (_: number, i: number) => xScale(i) + dataWidth/2)
@@ -112,6 +114,7 @@ function WeightVis (props: any): any {
       style={{
         height: "100px",
         width: "100%",
+        maxWidth: "500px"
       }}
     >
       <g className="bar-plot-area" />

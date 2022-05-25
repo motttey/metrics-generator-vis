@@ -79,7 +79,7 @@ function ScatterPlot(props: any): any {
         height: "100%",
         width: "100%",
         minWidth: "600px",
-        margin: "10% 0"
+        margin: "18% 50px 0 0"
       }}
     >
       <g className="plot-area" />
