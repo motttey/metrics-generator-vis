@@ -50,8 +50,10 @@ const getPosition = (
 ) => {
   let result = 0.0;
   arr.forEach((v: number, i: number) => {
-    if (i > 0) {
-      result = getOperation(result, v, operation[i - 1])
+    if (i === 0) {
+      result = v;
+    } else {
+      result = getOperation(result, v, operation[i - 1]);
     }
   });
   return result;
@@ -90,7 +92,7 @@ function App() {
 
   const randomizeWeight = (_: any) => {
     setWX(wX.map((_: any) => Math.random()));
-    setWY(wY.map((w: any) => w + Math.random()));
+    setWY(wY.map((_: any) => Math.random()));
   }
 
   const[weightObj, setWeightObj] = useState<any>({
