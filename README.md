@@ -1,6 +1,5 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# metrics-generator-vis
+多次元データから指標を作る v2
 
 ## Available Scripts
 
