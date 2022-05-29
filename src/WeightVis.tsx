@@ -66,7 +66,7 @@ function WeightVis (props: any): any {
         .attr("transform", "translate(" + margin.left + "," + 0 + ")")
         .call(d3.axisLeft(yScale));
       */
-      
+
       const dataWidth = (width - margin.left * 2) / (data.length * 2)
       getMergedPathData(currentPath, "rect", "bar", props.data)
         .attr("x", (_: number, i: number) => xScale(i) + dataWidth/2)
@@ -77,7 +77,6 @@ function WeightVis (props: any): any {
         })
         .attr("class", "bar")
         .style("fill", (_: any) => {
-          // return d3.schemeCategory10[i % d3.schemeCategory10.length]
           return d3.schemeCategory10[0]
         })
         .attr("stroke", "white");
@@ -94,8 +93,10 @@ function WeightVis (props: any): any {
             ])
             .on("end", (_self: any, _: any) => {
               const selection = _self.selection;
-              if (selection && selection[0] != 0) {
-                handleChange(idx, yScale.invert(selection[0]));
+              if (selection) {
+                console.log(selection);
+                const min = Math.min(...selection);
+                handleChange(idx, yScale.invert(min));
               }
             });
 
