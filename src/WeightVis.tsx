@@ -5,6 +5,7 @@ import { getMergedPathData, getMergedPath } from './d3_utils'
 function WeightVis (props: any): any {
   const ref = useRef(null);
   const [data, setData] = useState<Array<number>>([]);
+  const [labels, setLabels] = useState<Array<string>>([]);
 
   const height = 300;
   const width = 2000;
@@ -32,9 +33,17 @@ function WeightVis (props: any): any {
 
   }, [ props?.data ])
 
+  useEffect(() => {
+    if (props?.attributeLabelNameList.length > 0)
+      setLabels(props?.attributeLabelNameList);
+    else
+      setLabels(['unkwnon']); // set default
+
+  }, [ props?.attributeLabelNameList ])
+
   useEffect(
     () => {
-      const maxX: number = data.length || 0;
+      const maxX: number = labels.length || 0;
       const maxY: number = d3.max(data) as number || 0;
 
       const minX = 0;
@@ -58,7 +67,10 @@ function WeightVis (props: any): any {
       getMergedPath(currentPath, "g", "axisBottom")
         .attr("class", "axisBottom")
         .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-        .call(d3.axisBottom(xScale));
+        .call(d3.axisBottom(xScale)
+          .tickFormat((d: any) => labels[d - 0.5])
+        )
+        .style("font-size", "36px");
 
       /*
       getMergedPath(currentPath, "g", "axisLeft")
@@ -94,7 +106,6 @@ function WeightVis (props: any): any {
             .on("end", (_self: any, _: any) => {
               const selection = _self.selection;
               if (selection) {
-                console.log(selection);
                 const min = Math.min(...selection);
                 handleChange(idx, yScale.invert(min));
               }
