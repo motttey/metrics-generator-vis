@@ -11,26 +11,6 @@ import * as d3 from 'd3';
 import './App.css';
 
 import useDeepCompareEffect from 'use-deep-compare-effect';
-// const druid: any = require('@saehrimnir/druidjs');
-
-/*
-const _generateData = (n: number, n2: number) => {
-  const arr = Array(n)
-  return arr.map((d, i) => {
-    if (i < n2) {
-      return {
-        "x": d3.randomNormal(1, 100)(),
-        "y": d3.randomNormal(1, 100)()
-      }
-    } else {
-      return {
-        "x": d3.randomNormal(1, 50)(),
-        "y": d3.randomNormal(1, 50)()
-      }
-    }
-  });
-}
-*/
 
 const getOperation = (v1: number, v2: number, opCode: string) => {
   if (opCode === "+") {
