@@ -49,6 +49,8 @@ const getWeightedPos = (
 
 const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
 
+const attributeColumn = "Species";
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -88,9 +90,10 @@ function App() {
           .map((v: any) => parseFloat(v));
       });
 
-      setTargetValData(data.map((d: any) => d.Species));
+      setTargetValData(data.map((d: any) => d[attributeColumn]));
       setDataArray(arr);
-      const attributes = columns.slice(0, columns.length - 1);
+      const attributes = columns
+        .filter((c: string) => c !== attributeColumn);
       setAttributeLabels(attributes)
 
       setWX(attributes.map((_: any) => Math.random()));
@@ -101,7 +104,6 @@ function App() {
     }).catch((error: any) => {
       console.log(error);
       setDataArray([]);
-      return;
     });
   }, []);
 
