@@ -146,16 +146,33 @@ function App() {
         <h1 style={{textDecoration: "underline"}}>
           Metrics Generator
         </h1>
-        <div>
-          <ThemeProvider theme={theme}>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={randomizeWeight}
-            >
-              Random
-            </Button>
-          </ThemeProvider>
+        <div className="container">
+          <div className="column">
+            <ThemeProvider theme={theme}>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={randomizeWeight}
+              >
+                Random
+              </Button>
+            </ThemeProvider>
+          </div>
+          <div className="column">
+            <ThemeProvider theme={theme}>
+              <Button
+                color="primary"
+                variant="contained"
+              >
+                File Upload
+                <input
+                  hidden
+                  type="file"
+                  className="fileUploadButton"
+                />
+              </Button>
+            </ThemeProvider>
+          </div>
         </div>
       </header>
       <main className="App-main">
