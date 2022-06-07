@@ -140,6 +140,10 @@ function App() {
     }
   }, [weightObj, dataArray]);
 
+  const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -163,12 +167,15 @@ function App() {
               <Button
                 color="primary"
                 variant="contained"
+                component="label"
               >
                 File Upload
                 <input
                   hidden
                   type="file"
+                  accept=".csv"
                   className="fileUploadButton"
+                  onChange={fileUploadHandler}
                 />
               </Button>
             </ThemeProvider>
