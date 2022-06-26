@@ -8,6 +8,7 @@ import { Button, ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 
 import * as d3 from 'd3';
+import CSVFileValidator from 'csv-file-validator';
 import './App.css';
 
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -141,7 +142,28 @@ function App() {
   }, [weightObj, dataArray]);
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
+    if (!e.target.files || e.target.files.length === 0) return;
+
+    const reader = new FileReader();
+    const config = {
+      headers: [], // required
+      isHeaderNameOptional: false // default (optional)
+    };
+
+    reader.readAsText(e.target.files[0]);
+    reader.onload = (_) => {
+      console.log(reader.result);
+      CSVFileValidator(reader.result as string, config)
+        .then(csvData => {
+          // Array of objects from file
+          console.log(csvData.data);
+          // Array of error messages
+          console.log(csvData.inValidMessages);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
   }
 
   return (
