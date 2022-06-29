@@ -79,6 +79,9 @@ function App() {
     setWY(wY.map((_: any) => Math.random()));
   }
 
+  const [errors, setErrors] = useState<Array<any>>([]);
+  const [csvData, setCsvData] = useState<Array<any>>([]);
+
   const[weightObj, setWeightObj] = useState<any>({
     "x": wX,
     "y": wY
@@ -153,8 +156,12 @@ function App() {
     reader.readAsText(e.target.files[0]);
     reader.onload = (_) => {
       const json = Papa.parse(reader.result as string, config);
+      setErrors(json.errors);
+      setCsvData(json.data);
+
       console.log(json);
-      // data, errorでわける
+      console.log(errors);
+      console.log(csvData);
     };
   }
 
@@ -198,52 +205,54 @@ function App() {
       </header>
       <main className="App-main">
         <div className="container">
-          <div className="column">
-            <div className="row">
-              <ScatterPlot
-                data={irisData}
-                labels={targetValData}
-              />
+          <div className="row">
+            <div className="column">
+              <div className="row">
+                <ScatterPlot
+                  data={irisData}
+                  labels={targetValData}
+                />
+              </div>
             </div>
-          </div>
-          <div className="column">
-            <div className="row">
-              <h5>
-                Weight of X Axis
-              </h5>
-              <WeightForm
-                data={wX}
-                attributeLabelNameList={attributeLabels}
-                handleWeightChange={setWX}
-              />
-              <OpCodeForm
-                data={operationX}
-                handleOpeChange={setOperationX}
-              />
-              <WeightVis
-                data={wX}
-                attributeLabelNameList={attributeLabels}
-                handleWeightChange={setWX}
-              />
-            </div>
-            <div className="row">
-              <h5>
-                Weight of Y Axis
-              </h5>
-              <WeightForm
-                data={wY}
-                attributeLabelNameList={attributeLabels}
-                handleWeightChange={setWY}
-              />
-              <OpCodeForm
-                data={operationY}
-                handleOpeChange={setOperationY}
-              />
-              <WeightVis
-                data={wY}
-                attributeLabelNameList={attributeLabels}
-                handleWeightChange={setWY}
-              />
+            <div className="column">
+              <div className="row">
+                <h5>
+                  Weight of X Axis
+                </h5>
+                <WeightForm
+                  data={wX}
+                  attributeLabelNameList={attributeLabels}
+                  handleWeightChange={setWX}
+                />
+                <OpCodeForm
+                  data={operationX}
+                  handleOpeChange={setOperationX}
+                />
+                <WeightVis
+                  data={wX}
+                  attributeLabelNameList={attributeLabels}
+                  handleWeightChange={setWX}
+                />
+              </div>
+              <div className="row">
+                <h5>
+                  Weight of Y Axis
+                </h5>
+                <WeightForm
+                  data={wY}
+                  attributeLabelNameList={attributeLabels}
+                  handleWeightChange={setWY}
+                />
+                <OpCodeForm
+                  data={operationY}
+                  handleOpeChange={setOperationY}
+                />
+                <WeightVis
+                  data={wY}
+                  attributeLabelNameList={attributeLabels}
+                  handleWeightChange={setWY}
+                />
+              </div>
             </div>
           </div>
         </div>
