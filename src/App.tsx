@@ -205,54 +205,61 @@ function App() {
       </header>
       <main className="App-main">
         <div className="container">
-          <div className="row">
-            <div className="column">
-              <div className="row">
-                <ScatterPlot
-                  data={irisData}
-                  labels={targetValData}
-                />
-              </div>
+          <div className="column">
+            {
+              errors.map((error: any) => {
+                <p>{ error.message }</p>
+              })
+            }
+          </div>
+        </div>
+        <div className="container">
+          <div className="column">
+            <div className="row">
+              <ScatterPlot
+                data={irisData}
+                labels={targetValData}
+              />
             </div>
-            <div className="column">
-              <div className="row">
-                <h5>
-                  Weight of X Axis
-                </h5>
-                <WeightForm
-                  data={wX}
-                  attributeLabelNameList={attributeLabels}
-                  handleWeightChange={setWX}
-                />
-                <OpCodeForm
-                  data={operationX}
-                  handleOpeChange={setOperationX}
-                />
-                <WeightVis
-                  data={wX}
-                  attributeLabelNameList={attributeLabels}
-                  handleWeightChange={setWX}
-                />
-              </div>
-              <div className="row">
-                <h5>
-                  Weight of Y Axis
-                </h5>
-                <WeightForm
-                  data={wY}
-                  attributeLabelNameList={attributeLabels}
-                  handleWeightChange={setWY}
-                />
-                <OpCodeForm
-                  data={operationY}
-                  handleOpeChange={setOperationY}
-                />
-                <WeightVis
-                  data={wY}
-                  attributeLabelNameList={attributeLabels}
-                  handleWeightChange={setWY}
-                />
-              </div>
+          </div>
+          <div className="column">
+            <div className="row">
+              <h5>
+                Weight of X Axis
+              </h5>
+              <WeightForm
+                data={wX}
+                attributeLabelNameList={attributeLabels}
+                handleWeightChange={setWX}
+              />
+              <OpCodeForm
+                data={operationX}
+                handleOpeChange={setOperationX}
+              />
+              <WeightVis
+                data={wX}
+                attributeLabelNameList={attributeLabels}
+                handleWeightChange={setWX}
+              />
+            </div>
+            <div className="row">
+              <h5>
+                Weight of Y Axis
+              </h5>
+              <WeightForm
+                data={wY}
+                attributeLabelNameList={attributeLabels}
+                handleWeightChange={setWY}
+              />
+              <OpCodeForm
+                data={operationY}
+                handleOpeChange={setOperationY}
+              />
+              <WeightVis
+                data={wY}
+                attributeLabelNameList={attributeLabels}
+                handleWeightChange={setWY}
+              />
             </div>
           </div>
         </div>
