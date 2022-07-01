@@ -81,7 +81,7 @@ function App() {
 
   const [errors, setErrors] = useState<Array<any>>([]);
   const [csvColumn, setCsvColumn] = useState<Array<any>>([]);
-  // const [csvRows, setCsvRows] = useState<Array<string>>([]);
+  const [csvRows, setCsvRows] = useState<Array<string>>([]);
   const [csvData, setCsvData] = useState<any>({});
 
   const[weightObj, setWeightObj] = useState<any>({
@@ -166,6 +166,11 @@ function App() {
     if (csvData.data && csvData.errors) {
       setErrors(JSON.parse(JSON.stringify(csvData.errors)));
       setCsvColumn(JSON.parse(JSON.stringify(csvData.data)));
+      setCsvRows(csvData.meta.fields.map((row) => ({
+        field: row,
+        headerName: row,
+        width: 50
+      })));
     }
   }, [csvData]);
 
@@ -218,11 +223,20 @@ function App() {
             }
           </div>
           <div className="column">
-            {
-              csvColumn.map((column: any) => {
-                <p>{ column.toString() }</p>
-              })
-            }
+            <div className="row">
+              {
+                csvRows.map((row: any) => {
+                  <p>{ row.fields }</p>
+                })
+              }
+            </div>
+            <div className="row">
+              {
+                csvColumn.map((column: any) => {
+                  <p>{ column }</p>
+                })
+              }
+            </div>
           </div>
         </div>
         <div className="container">
