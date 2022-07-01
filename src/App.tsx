@@ -80,7 +80,9 @@ function App() {
   }
 
   const [errors, setErrors] = useState<Array<any>>([]);
-  const [csvData, setCsvData] = useState<Array<any>>([]);
+  const [csvColumn, setCsvColumn] = useState<Array<any>>([]);
+  // const [csvRows, setCsvRows] = useState<Array<string>>([]);
+  const [csvData, setCsvData] = useState<any>({});
 
   const[weightObj, setWeightObj] = useState<any>({
     "x": wX,
@@ -145,10 +147,10 @@ function App() {
     }
   }, [weightObj, dataArray]);
 
+  const reader = new FileReader();
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
 
-    const reader = new FileReader();
     const config = {
       header: true
     };
@@ -156,14 +158,17 @@ function App() {
     reader.readAsText(e.target.files[0]);
     reader.onload = (_) => {
       const json = Papa.parse(reader.result as string, config);
-      setErrors(json.errors);
-      setCsvData(json.data);
-
-      console.log(json);
-      console.log(errors);
-      console.log(csvData);
+      setCsvData(json)
     };
   }
+
+  useDeepCompareEffect(() => {
+    if (csvData.data && csvData.errors) {
+      setErrors(JSON.parse(JSON.stringify(csvData.errors)));
+      setCsvColumn(JSON.parse(JSON.stringify(csvData.data)));
+    }
+  }, [csvData]);
+
 
   return (
     <div className="App">
@@ -209,6 +214,13 @@ function App() {
             {
               errors.map((error: any) => {
                 <p>{ error.message }</p>
+              })
+            }
+          </div>
+          <div className="column">
+            {
+              csvColumn.map((column: any) => {
+                <p>{ column.toString() }</p>
               })
             }
           </div>
