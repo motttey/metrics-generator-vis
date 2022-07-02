@@ -4,8 +4,8 @@ import WeightForm from './WeightForm';
 import WeightVis from './WeightVis';
 import OpCodeForm from './OpCodeForm';
 
-import { Button, ThemeProvider } from '@material-ui/core';
-import { createTheme } from '@material-ui/core/styles';
+import { Button, ThemeProvider } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 
 import * as d3 from 'd3';
 import Papa from 'papaparse';
