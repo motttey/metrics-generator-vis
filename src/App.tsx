@@ -5,6 +5,8 @@ import WeightVis from './WeightVis';
 import OpCodeForm from './OpCodeForm';
 
 import { Button, ThemeProvider } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+
 import { createTheme } from '@mui/material/styles';
 
 import * as d3 from 'd3';
@@ -81,7 +83,7 @@ function App() {
 
   const [errors, setErrors] = useState<Array<any>>([]);
   const [csvColumn, setCsvColumn] = useState<Array<any>>([]);
-  const [csvRows, setCsvRows] = useState<Array<string>>([]);
+  const [csvRows, setCsvRows] = useState<Array<any>>([]);
   const [csvData, setCsvData] = useState<any>({});
 
   const[weightObj, setWeightObj] = useState<any>({
@@ -169,6 +171,7 @@ function App() {
       setCsvRows(csvData.meta.fields.map((row) => ({
         field: row,
         headerName: row,
+        id: row,
         width: 50
       })));
     }
@@ -236,6 +239,14 @@ function App() {
                   <p>{ column }</p>
                 })
               }
+              <DataGrid
+                rows={csvRows}
+                columns={csvColumn}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                disableSelectionOnClick
+              />
             </div>
           </div>
         </div>
