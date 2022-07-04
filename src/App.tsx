@@ -82,7 +82,7 @@ function App() {
   }
 
   const [errors, setErrors] = useState<Array<any>>([]);
-  const [csvColumn, setCsvColumn] = useState<Array<any>>([]);
+  const [csvColumns, setCsvColumns] = useState<Array<any>>([]);
   const [csvRows, setCsvRows] = useState<Array<any>>([]);
   const [csvData, setCsvData] = useState<any>({});
 
@@ -166,14 +166,24 @@ function App() {
 
   useDeepCompareEffect(() => {
     if (csvData.data && csvData.errors) {
-      setErrors(JSON.parse(JSON.stringify(csvData.errors)));
-      setCsvColumn(JSON.parse(JSON.stringify(csvData.data)));
-      setCsvRows(csvData.meta.fields.map((row) => ({
-        field: row,
-        headerName: row,
-        id: row,
-        width: 50
-      })));
+      setErrors(csvData.errors);
+      const data = csvData.data;
+      data.forEach((column, index) => {
+        data["index"] = index;
+      });
+
+      if (errors.length === 0) {
+        setCsvColumns(data);
+        setCsvRows(csvData.meta.fields.map((row) => ({
+          field: row,
+          headerName: row,
+          id: row,
+          width: 50
+        })));
+      } else {
+        console.log(csvData.errors);
+      }
+      console.log(data);
     }
   }, [csvData]);
 
@@ -234,10 +244,10 @@ function App() {
               }
             </div>
             <div className="row">
-              {csvColumn.length > 0 &&
+              {csvColumns.length > 0 &&
                 <DataGrid
                   rows={csvRows}
-                  columns={csvColumn}
+                  columns={csvColumns}
                   pageSize={5}
                   rowsPerPageOptions={[5]}
                   checkboxSelection
