@@ -221,7 +221,7 @@ function App() {
           <div className="column">
             {
               errors.map((error: any) => {
-                <p>{ error.message }</p>
+                <p key={error.message}>{ error.message }</p>
               })
             }
           </div>
@@ -229,24 +229,21 @@ function App() {
             <div className="row">
               {
                 csvRows.map((row: any) => {
-                  <p>{ row.fields }</p>
+                  <p key={row.id}>{ row.fields }</p>
                 })
               }
             </div>
             <div className="row">
-              {
-                csvColumn.map((column: any) => {
-                  <p>{ column }</p>
-                })
+              {csvColumn.length > 0 &&
+                <DataGrid
+                  rows={csvRows}
+                  columns={csvColumn}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                  checkboxSelection
+                  disableSelectionOnClick
+                />
               }
-              <DataGrid
-                rows={csvRows}
-                columns={csvColumn}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                disableSelectionOnClick
-              />
             </div>
           </div>
         </div>
