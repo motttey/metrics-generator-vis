@@ -1,25 +1,24 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FormControl, List, ListItem, MenuItem, Select } from '@mui/material';
 
 function OpCodeForm (props: any): any {
   const [operation, setOperation] = useState<Array<string>>([]);
 
   const handleSelect = (
-    e: React.MouseEvent<HTMLElement>,
     code: string,
     index: number
   ) => {
-    operation[index] = code;
-    props.handleOpeChange(JSON.parse(JSON.stringify(operation)));
+    props.handleOpeChange([
+      ...operation.slice(0, index),
+      code,
+      ...operation.slice(index + 1)
+    ]);
   }
 
-  useEffect(
-    () => {
-      setOperation(props?.data)
-    },
-    [ props?.data ]
-  )
+  useEffect(() => {
+    setOperation(props?.data);
+  }, [props?.data]);
 
   return (
     <List
@@ -53,7 +52,7 @@ function OpCodeForm (props: any): any {
                       <MenuItem
                         key={i}
                         value={code}
-                        onClick={(event) => handleSelect(event, code, index)}
+                        onClick={() => handleSelect(code, index)}
                       >
                         {code}
                       </MenuItem>
