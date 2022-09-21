@@ -52,7 +52,6 @@ const getWeightedPos = (
 }
 
 const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
-
 const attributeColumn = "Species";
 
 const theme = createTheme({

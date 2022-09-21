@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import { getMergedPathData, getMergedPath } from './d3_utils'
 
 function WeightVis (props: any): any {
+  const height = 300;
+  const width = 2000;
+
   const ref = useRef(null);
   const [data, setData] = useState<Array<number>>([]);
   const [labels, setLabels] = useState<Array<string>>([]);
-
-  const height = 300;
-  const width = 2000;
 
   const margin = useMemo(() => {
     return { top: 50, right: 50, bottom: 50, left: 50 };
