@@ -20,8 +20,11 @@ function WeightVis (props: any): any {
   const handleChange = (i: number, d: any) => {
     // k有効数字3けたまでで一致する
     if (data[i] && d.toFixed(3) != data[i].toFixed(3)) {
-      data[i] = d;
-      props.handleWeightChange(JSON.parse(JSON.stringify(data)));
+      props.handleWeightChange([
+        ...data.slice(0, i),
+        d,
+        ...data.slice(i + 1)
+      ]);
     }
   }
 
