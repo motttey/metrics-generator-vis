@@ -5,16 +5,15 @@ import WeightVis from './WeightVis';
 import OpCodeForm from './OpCodeForm';
 
 import { Button, ThemeProvider } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-
+// import { DataGrid } from '@mui/x-data-grid';
 import { createTheme } from '@mui/material/styles';
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import Papa from 'papaparse';
 
 import * as d3 from 'd3';
-import Papa from 'papaparse';
 
 import './App.css';
 
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 const getOperation = (v1: number, v2: number, opCode: string) => {
   if (opCode === "+") {
@@ -152,39 +151,42 @@ function App() {
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
 
-    const config = {
+    const parseConfig = {
       header: true
     };
 
     reader.readAsText(e.target.files[0]);
     reader.onload = (_) => {
-      const json = Papa.parse(reader.result as string, config);
-      setCsvData(json)
+      const json = Papa.parse(reader.result as string, parseConfig);
+      setCsvData(json);
+      console.log(csvData);
     };
   }
 
   useDeepCompareEffect(() => {
     if (csvData.data && csvData.errors) {
       setErrors(csvData.errors);
-      const data = csvData.data;
-      data.forEach((column, index) => {
-        data["index"] = index;
-      });
-
       if (errors.length === 0) {
-        setCsvColumns(data);
-        setCsvRows(csvData.meta.fields.map((row) => ({
+        setCsvColumns([...csvData.data]);
+        setCsvRows([...csvData.meta.fields.map((row: any) => ({
           field: row,
           headerName: row,
           id: row,
           width: 50
-        })));
+        }))]);
+
+
       } else {
         console.log(csvData.errors);
       }
-      console.log(data);
     }
   }, [csvData]);
+
+
+  useEffect(() => {
+    console.log(csvColumns);
+    console.log(csvRows);
+  }, [csvColumns, csvRows]);
 
 
   return (
@@ -243,15 +245,10 @@ function App() {
               }
             </div>
             <div className="row">
-              {csvColumns.length > 0 &&
-                <DataGrid
-                  rows={csvRows}
-                  columns={csvColumns}
-                  pageSize={5}
-                  rowsPerPageOptions={[5]}
-                  checkboxSelection
-                  disableSelectionOnClick
-                />
+              {
+                csvColumns.map((column: any) => {
+                  <p key={column}>{ column }</p>
+                })
               }
             </div>
           </div>
