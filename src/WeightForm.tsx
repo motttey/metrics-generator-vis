@@ -18,9 +18,12 @@ function WeightForm (props: any): any {
     [ props?.data ]
   )
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    data[parseInt(e.target.name)] = parseFloat(e.target.value);
-    props.handleWeightChange(JSON.parse(JSON.stringify(data)));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    props.handleWeightChange([
+      ...data.slice(0, index),
+      parseFloat(e.target.value),
+      ...data.slice(index + 1)
+    ]);
   }
 
   const handleDragEnd = (res: any) => {
@@ -62,15 +65,16 @@ function WeightForm (props: any): any {
                         {...provided.dragHandleProps}
                       >
                         <TextField
-                          onChange={handleChange}
+                          variant="standard"
                           style= {{
                             width: "80px",
-                            margin: "5px",
+                            margin: "15px",
                             backgroundColor: "currentColor"
                           }}
                           key={index}
                           name={index.toString()}
                           value={weight.toFixed(4)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
                           label={props.attributeLabelNameList[index] || 'unknown'}
                         />
                       </ListItem>
