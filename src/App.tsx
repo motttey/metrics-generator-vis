@@ -3,6 +3,7 @@ import ScatterPlot from './ScatterPlot';
 import WeightForm from './WeightForm';
 import WeightVis from './WeightVis';
 import OpCodeForm from './OpCodeForm';
+import LoadedData from './loadedData';
 
 import { Button, ThemeProvider } from '@mui/material';
 // import { DataGrid } from '@mui/x-data-grid';
@@ -13,7 +14,6 @@ import Papa from 'papaparse';
 import * as d3 from 'd3';
 
 import './App.css';
-
 
 const getOperation = (v1: number, v2: number, opCode: string) => {
   if (opCode === "+") {
@@ -164,30 +164,24 @@ function App() {
   }
 
   useDeepCompareEffect(() => {
-    if (csvData.data && csvData.errors) {
-      setErrors(csvData.errors);
-      if (errors.length === 0) {
-        setCsvColumns([...csvData.data]);
-        setCsvRows([...csvData.meta.fields.map((row: any) => ({
-          field: row,
-          headerName: row,
-          id: row,
-          width: 50
-        }))]);
-
-
-      } else {
+    // setErrors(csvData.errors);
+    if (
+      (csvData.errors && csvData.errors.length >= 0) 
+      || (csvData.data && csvData.data.length === 0)) {
+      setCsvColumns([...csvData.data]);
+      setCsvRows([...csvData.meta.fields.map((row: any) => ({
+        field: row,
+        headerName: row,
+        id: row,
+        width: 50
+      }))]);
+    } else {
+      if (csvData.errors) {
+        setErrors(csvData.errors);
         console.log(csvData.errors);
       }
     }
   }, [csvData]);
-
-
-  useEffect(() => {
-    console.log(csvColumns);
-    console.log(csvRows);
-  }, [csvColumns, csvRows]);
-
 
   return (
     <div className="App">
@@ -230,27 +224,11 @@ function App() {
       <main className="App-main">
         <div className="container">
           <div className="column">
-            {
-              errors.map((error: any) => {
-                <p key={error.message}>{ error.message }</p>
-              })
-            }
-          </div>
-          <div className="column">
-            <div className="row">
-              {
-                csvRows.map((row: any) => {
-                  <p key={row.id}>{ row.fields }</p>
-                })
-              }
-            </div>
-            <div className="row">
-              {
-                csvColumns.map((column: any) => {
-                  <p key={column}>{ column }</p>
-                })
-              }
-            </div>
+            <LoadedData 
+              errors={errors}
+              csvRows={csvRows}
+              csvColumns={csvColumns}
+            />
           </div>
         </div>
         <div className="container">
