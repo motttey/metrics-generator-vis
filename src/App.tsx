@@ -5,7 +5,7 @@ import WeightVis from './WeightVis';
 import OpCodeForm from './OpCodeForm';
 import LoadedData from './loadedData';
 
-import { Button, ThemeProvider } from '@mui/material';
+import { Button, Divider, ThemeProvider } from '@mui/material';
 // import { DataGrid } from '@mui/x-data-grid';
 import { createTheme } from '@mui/material/styles';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -190,7 +190,7 @@ function App() {
           Metrics Generator
         </h1>
         <div className="container">
-          <div className="column">
+          <div className="row">
             <ThemeProvider theme={theme}>
               <Button
                 color="primary"
@@ -201,7 +201,7 @@ function App() {
               </Button>
             </ThemeProvider>
           </div>
-          <div className="column">
+          <div className="row">
             <ThemeProvider theme={theme}>
               <Button
                 color="primary"
@@ -221,6 +221,7 @@ function App() {
           </div>
         </div>
       </header>
+      <Divider textAlign="center">Edit Metrics</Divider>
       <main className="App-main">
         <div className="container">
           <div className="column">
@@ -282,6 +283,7 @@ function App() {
           </div>
         </div>
       </main>
+      <Divider></Divider>
       <footer className="App-footer">
         <h6>
           Metrics generator
