@@ -26,6 +26,10 @@ function ScatterPlot(props: any): any {
       const minX = d3.min(props.data, xValue) || 0;
       const minY = d3.min(props.data, yValue) || 0;
 
+      const tooltip = d3.select("#visContainer")
+        .append("div")
+        .attr("class", "tooltip");
+
       const xScale = d3
         .scaleLinear()
         .domain([minX, maxX])
@@ -54,10 +58,27 @@ function ScatterPlot(props: any): any {
         })
         .attr("r", 2)
         .attr("class", "dataPoint")
-        .style("fill", (d: any, i: number) => {
+        .style("fill", (_: any, i: number) => {
           return colorScale(props.labels[i]);
         })
-        .attr("stroke", "white");
+        .attr("stroke", "white")
+        .on("mouseover", (e: any) => {
+					const d = e.target.__data__;
+          tooltip
+						.style("visibility", "visible")
+						.html(
+              "x: " + d.x + '\n'
+              + "y: " + d.y
+            );
+				})
+				.on("mousemove", (e: any) => {
+					tooltip
+						.style("top", (e.pageY - 20) + "px")
+						.style("left", (e.pageX + 10) + "px");
+				})
+				.on("mouseout", (_: any) => {
+					tooltip.style("visibility", "hidden");
+				});
 
       getMergedPath(currentPath, "g", "axisBottom")
         .attr("class", "axisBottom")
@@ -73,17 +94,19 @@ function ScatterPlot(props: any): any {
   )
 
   return (
-    <svg
-      ref={ref}
-      style={{
-        height: "100%",
-        width: "100%",
-        minWidth: "600px",
-        margin: "18% 50px 0 0"
-      }}
-    >
-      <g className="plot-area" />
-    </svg>
+    <div id="visContainer">
+      <svg
+        ref={ref}
+        style={{
+          height: "100%",
+          width: "100%",
+          minWidth: "600px",
+          margin: "18% 50px 0 0"
+        }}
+      >
+        <g className="plot-area" />
+      </svg>
+    </div>
   );
 }
 
