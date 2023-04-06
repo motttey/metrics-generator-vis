@@ -89,6 +89,14 @@ function App() {
     "y": wY
   });
 
+  const dividerStyle = {
+    color: "white",
+    borderColor: "white",
+    '&:before, &:after': {
+      borderColor: "white"
+    }
+  }
+
   useEffect(() => {
     d3.csv(iris_url).then((data: any) => {
       const columns = data.columns;
@@ -221,7 +229,9 @@ function App() {
           </div>
         </div>
       </header>
-      <Divider textAlign="center">Edit Metrics</Divider>
+      <Divider sx={dividerStyle} textAlign="center">
+          Edit Metrics    
+      </Divider>
       <main className="App-main">
         <div className="container">
           <div className="column">
@@ -283,7 +293,7 @@ function App() {
           </div>
         </div>
       </main>
-      <Divider></Divider>
+      <Divider sx={dividerStyle}></Divider>
       <footer className="App-footer">
         <h6>
           Metrics generator
