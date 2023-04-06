@@ -28,7 +28,10 @@ function ScatterPlot(props: any): any {
 
       const tooltip = d3.select("#visContainer")
         .append("div")
-        .attr("class", "tooltip");
+        .attr("class", "tooltip")
+        .style("font-size", "14px")
+        .style("text-align", "left")
+        .style("position", "absolute");
 
       const xScale = d3
         .scaleLinear()
@@ -67,8 +70,8 @@ function ScatterPlot(props: any): any {
           tooltip
 						.style("visibility", "visible")
 						.html(
-              "x: " + d.x + '\n'
-              + "y: " + d.y
+              "x: " + d.x.toFixed(4) + '</br>'
+              + "y: " + d.y.toFixed(4)
             );
 				})
 				.on("mousemove", (e: any) => {
