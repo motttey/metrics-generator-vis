@@ -92,8 +92,10 @@ function App() {
   const dividerStyle = {
     color: "white",
     borderColor: "white",
+    borderWidth: "0.5px",
     '&:before, &:after': {
-      borderColor: "white"
+      borderColor: "white",
+      borderWidth: "0.5px"
     }
   }
 
@@ -202,7 +204,7 @@ function App() {
             <ThemeProvider theme={theme}>
               <Button
                 color="primary"
-                variant="contained"
+                variant="outlined"
                 onClick={randomizeWeight}
               >
                 Random
@@ -213,7 +215,7 @@ function App() {
             <ThemeProvider theme={theme}>
               <Button
                 color="primary"
-                variant="contained"
+                variant="outlined"
                 component="label"
               >
                 File Upload

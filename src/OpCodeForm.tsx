@@ -5,6 +5,12 @@ import { FormControl, List, ListItem, MenuItem, Select } from '@mui/material';
 function OpCodeForm (props: any): any {
   const [operation, setOperation] = useState<Array<string>>([]);
 
+  const selectStyle = {
+    color: "white",
+    borderColor: 'grey',
+    borderRadius: "10px"
+  }
+
   const handleSelect = (
     code: string,
     index: number
@@ -38,12 +44,11 @@ function OpCodeForm (props: any): any {
             <FormControl fullWidth>
               <Select
                 id="operation-select"
-                label="Operation"
-                style= {{
-                  color: "white"
-                }}
-                color="secondary"
                 name={index.toString()}
+                label="Operation"
+                sx={selectStyle}
+                color="primary"
+                variant="outlined"
                 value={op}
               >
                 {
