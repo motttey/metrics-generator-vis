@@ -28,7 +28,7 @@ function WeightVis (props: any): any {
     }
   }
 
-  useEffect(() => {
+  useMemo(() => {
     if (props?.data.length > 0)
       setData(props?.data);
     else
@@ -36,7 +36,7 @@ function WeightVis (props: any): any {
 
   }, [ props?.data ])
 
-  useEffect(() => {
+  useMemo(() => {
     if (props?.attributeLabelNameList.length > 0)
       setLabels(props?.attributeLabelNameList);
     else

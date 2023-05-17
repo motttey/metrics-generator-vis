@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { FormControl, List, ListItem, MenuItem, Select } from '@mui/material';
 
 function OpCodeForm (props: any): any {
@@ -22,7 +22,7 @@ function OpCodeForm (props: any): any {
     ]);
   }
 
-  useEffect(() => {
+  useMemo(() => {
     setOperation(props?.data);
   }, [props?.data]);
 

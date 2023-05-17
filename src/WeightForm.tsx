@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { TextField, List , ListItem } from '@mui/material';
 import {
   DragDropContext,
@@ -11,7 +11,7 @@ import {
 function WeightForm (props: any): any {
   const [data, setData] = useState<Array<number>>([]);
 
-  useEffect(
+  useMemo(
     () => {
       setData(props?.data)
     },
