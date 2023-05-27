@@ -134,14 +134,14 @@ function App() {
   useEffect(() => {
     const res = dataArray.map((d: any, i: number) => new Object({
       x: getWeightedPos(d, weightObj["x"], operationX),
-      y: irisData[i].y
+      y: irisData[i]?.y
     }));
     setIrisData(res);
   }, [operationX]);
 
   useEffect(() => {
     const res = dataArray.map((d: any, i: number) => new Object({
-      x: irisData[i].x,
+      x: irisData[i]?.x,
       y: getWeightedPos(d, weightObj["y"], operationY)
     }));
     setIrisData(res);
