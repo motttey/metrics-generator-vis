@@ -20,6 +20,11 @@
 		"react",
 		"@typescript-eslint"
 	],
+	"settings": {
+		"react": {
+			"version": "18.0.2"
+		}
+	},
 	"rules": {
 		"@typescript-eslint/no-explicit-any": 0,
 		"@typescript-eslint/ban-ts-comment": 0,
