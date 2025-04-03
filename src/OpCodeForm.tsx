@@ -2,13 +2,17 @@
 import { useState, useMemo } from 'react';
 import { FormControl, List, ListItem, MenuItem, Select } from '@mui/material';
 
+const OPERATION_LIST = ["+", "x", "/"]
+
 function OpCodeForm (props: any): any {
   const [operation, setOperation] = useState<Array<string>>([]);
 
   const selectStyle = {
     color: "white",
-    borderColor: 'grey',
-    borderRadius: "10px"
+    borderColor: 'white',
+    borderRadius: "10px",
+    outlineColor: 'white',
+    outline: '1px solid white'
   }
 
   const handleSelect = (
@@ -52,7 +56,7 @@ function OpCodeForm (props: any): any {
                 value={op}
               >
                 {
-                  ["+", "x", "/"].map((code: string, i: number) => {
+                  OPERATION_LIST.map((code: string, i: number) => {
                     return (
                       <MenuItem
                         key={i}
