@@ -100,7 +100,10 @@ function App() {
   }
 
   useEffect(() => {
-    d3.csv(iris_url).then((data: any) => {
+    const d = d3.csv(iris_url);
+    if (!d) return;
+
+    d.then((data: any) => {
       const columns = data.columns;
       const arr = data.map((d: any) => {
         return Object.values(d).slice(0, columns.length - 1)
