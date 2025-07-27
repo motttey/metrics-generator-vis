@@ -23,8 +23,8 @@ function LoadedData(props: LoadedDataProps): JSX.Element {
       )}
       {csvRows.length > 0 && (
         <div className="row">
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Select Target Variable</FormLabel>
+          <FormControl component="fieldset" sx={{color: "white", width: "100%"}}>
+            <FormLabel component="legend" sx={{color: "white", textAlign: "left"}}>Select Target Variable</FormLabel>
             <RadioGroup
               row
               aria-label="target-variable"
@@ -33,7 +33,12 @@ function LoadedData(props: LoadedDataProps): JSX.Element {
               onChange={onTargetValColumnChange}
             >
               {csvRows.map((row: any) => (
-                <FormControlLabel key={row.field} value={row.field} control={<Radio />} label={row.headerName} />
+                <FormControlLabel 
+                  key={row.field} 
+                  value={row.field} 
+                  control={<Radio sx={{color: "white", '&.Mui-checked': {color: "white"}}}/>} 
+                  label={row.headerName} 
+                />
               ))}
             </RadioGroup>
           </FormControl>
@@ -41,7 +46,7 @@ function LoadedData(props: LoadedDataProps): JSX.Element {
       )}
       {/*
       {csvColumns.length > 0 && (
-         <div style={{ height: 400, width: '100%', color: "black", backgroundColor: "white" }}>
+         <div style={{ height: 400, width: '100%', color: "black", backgroundColor: "white", overflow: "auto" }}>
            <table style={{width: "100%"}}>
             <thead>
               <tr>
@@ -59,7 +64,7 @@ function LoadedData(props: LoadedDataProps): JSX.Element {
            {csvColumns.length > 10 && <p>... and {csvColumns.length - 10} more rows</p>}
         </div>
       )}
-     */}
+      */}
     </div>
   );
 }
