@@ -12,7 +12,10 @@ function OpCodeForm (props: any): any {
     borderColor: 'white',
     borderRadius: "10px",
     outlineColor: 'white',
-    outline: '1px solid white'
+    outline: '1px solid white',
+    '& .MuiSvgIcon-root': {
+      color: 'white',
+    },
   }
 
   const handleSelect = (
@@ -54,6 +57,13 @@ function OpCodeForm (props: any): any {
                 color="primary"
                 variant="outlined"
                 value={op}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      backgroundColor: 'white',
+                    },
+                  },
+                }}
               >
                 {
                   OPERATION_LIST.map((code: string, i: number) => {
