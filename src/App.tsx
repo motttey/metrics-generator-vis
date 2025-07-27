@@ -67,6 +67,8 @@ function App() {
   const [irisData, setIrisData] = useState<Array<any>>([]);
   const [targetValData, setTargetValData] = useState<Array<any>>([]);
   const [attributeLabels, setAttributeLabels] = useState<Array<string>>([]);
+  const [targetValColumn, setTargetValColumn] = useState<string>(attributeColumn);
+  const [uploadedData, setUploadedData] = useState<Array<any>>([]);
 
   const [wX, setWX] = useState<Array<number>>([]);
   const [wY, setWY] = useState<Array<number>>([]);
@@ -79,10 +81,13 @@ function App() {
     setWY(wY.map((_: any) => Math.random()));
   }
 
-  const [errors, setErrors] = useState<Array<any>>([]);
+  const handleTargetValColumnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTargetValColumn(event.target.value);
+  };
+
+  // const [errors, setErrors] = useState<Array<any>>([]);
   const [csvColumns, setCsvColumns] = useState<Array<any>>([]);
   const [csvRows, setCsvRows] = useState<Array<any>>([]);
-  const [csvData, setCsvData] = useState<any>({});
 
   const[weightObj, setWeightObj] = useState<any>({
     "x": wX,
@@ -104,26 +109,10 @@ function App() {
     if (!d) return;
 
     d.then((data: any) => {
-      const columns = data.columns;
-      const arr = data.map((d: any) => {
-        return Object.values(d).slice(0, columns.length - 1)
-          .map((v: any) => parseFloat(v));
-      });
-
-      setTargetValData(data.map((d: any) => d[attributeColumn]));
-      setDataArray(arr);
-      const attributes = columns
-        .filter((c: string) => c !== attributeColumn);
-      setAttributeLabels(attributes)
-
-      setWX(attributes.map((_: any) => Math.random()));
-      setWY(attributes.map((_: any) => Math.random()));
-
-      setOperationX(attributes.slice(1).map((_: any) => "+"));
-      setOperationY(attributes.slice(1).map((_: any) => "+"));
+      setUploadedData(data);
     }).catch((error: any) => {
       console.log(error);
-      setDataArray([]);
+      setUploadedData([]);
     });
   }, []);
 
@@ -160,41 +149,50 @@ function App() {
     }
   }, [weightObj, dataArray]);
 
-  const reader = new FileReader();
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
 
     const parseConfig = {
-      header: true
+      header: true,
+      skipEmptyLines: true,
+      complete: (results: any) => {
+        setUploadedData(results.data);
+        setTargetValColumn("");
+      }
     };
 
-    reader.readAsText(e.target.files[0]);
-    reader.onload = (_) => {
-      const json = Papa.parse(reader.result as string, parseConfig);
-      setCsvData(json);
-      console.log(csvData);
-    };
+    Papa.parse(e.target.files[0], parseConfig);
   }
 
   useDeepCompareEffect(() => {
-    // setErrors(csvData.errors);
-    if (
-      (csvData.errors && csvData.errors.length >= 0) 
-      || (csvData.data && csvData.data.length === 0)) {
-      setCsvColumns([...csvData.data]);
-      setCsvRows([...csvData.meta.fields.map((row: any) => ({
-        field: row,
-        headerName: row,
-        id: row,
-        width: 50
-      }))]);
-    } else {
-      if (csvData.errors) {
-        setErrors(csvData.errors);
-        console.log(csvData.errors);
-      }
-    }
-  }, [csvData]);
+    if (uploadedData.length === 0) return;
+
+    const data: any = uploadedData;
+    const columns = Object.keys(data[0]);
+    const attributes = columns.filter((c: string) => c !== targetValColumn);
+    const arr = data.map((d: any) => {
+      return attributes.map((attr: string) => parseFloat(d[attr]));
+    });
+
+    setTargetValData(targetValColumn ? data.map((d: any) => d[targetValColumn]) : []);
+    setDataArray(arr);
+    setAttributeLabels(attributes);
+
+    setWX(attributes.map((_: any) => Math.random()));
+    setWY(attributes.map((_: any) => Math.random()));
+
+    setOperationX(attributes.slice(1).map((_: any) => "+"));
+    setOperationY(attributes.slice(1).map((_: any) => "+"));
+
+    setCsvColumns([...data]);
+    setCsvRows([...columns.map((row: any) => ({
+      field: row,
+      headerName: row,
+      id: row,
+      width: 50
+    }))]);
+
+  }, [uploadedData, targetValColumn]);
 
   return (
     <div className="App">
@@ -240,10 +238,12 @@ function App() {
       <main className="App-main">
         <div className="container">
           <div className="column">
-            <LoadedData 
-              errors={errors}
+            <LoadedData
+              errors={[]}
               csvRows={csvRows}
               csvColumns={csvColumns}
+              targetValColumn={targetValColumn}
+              onTargetValColumnChange={handleTargetValColumnChange}
             />
           </div>
         </div>
