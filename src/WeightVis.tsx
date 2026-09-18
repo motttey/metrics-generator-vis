@@ -1,8 +1,9 @@
 import * as d3 from 'd3';
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import { getMergedPathData, getMergedPath } from './d3_utils'
 
 function WeightVis (props: any): any {
+  const { handleWeightChange } = props;
   const height = 300;
   const width = 2000;
 
@@ -17,16 +18,16 @@ function WeightVis (props: any): any {
   const currentPath = d3.select(ref.current)
     .select(".bar-plot-area");
 
-  const handleChange = (i: number, d: any) => {
+  const handleChange = useCallback((i: number, d: any) => {
     // k有効数字3けたまでで一致する
     if (data[i] && d.toFixed(3) != data[i].toFixed(3)) {
-      props.handleWeightChange([
+      handleWeightChange([
         ...data.slice(0, i),
         d,
         ...data.slice(i + 1)
       ]);
     }
-  }
+  }, [data, handleWeightChange]);
 
   useMemo(() => {
     if (props?.data.length > 0)
@@ -121,7 +122,7 @@ function WeightVis (props: any): any {
             })
         });
     },
-  [ props?.data, margin, currentPath, data ]);
+  [ props?.data, margin, currentPath, data, labels, handleChange ]);
 
   return (
     <svg

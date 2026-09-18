@@ -70,15 +70,15 @@ function App() {
   const [targetValColumn, setTargetValColumn] = useState<string>(attributeColumn);
   const [uploadedData, setUploadedData] = useState<Array<any>>([]);
 
-  const [wX, setWX] = useState<Array<number>>([]);
-  const [wY, setWY] = useState<Array<number>>([]);
+  const [wx, setWx] = useState<Array<number>>([]);
+  const [wy, setWy] = useState<Array<number>>([]);
 
   const [operationX, setOperationX] = useState<Array<string>>([]);
   const [operationY, setOperationY] = useState<Array<string>>([]);
 
   const randomizeWeight = (_: any) => {
-    setWX(wX.map((_: any) => Math.random()));
-    setWY(wY.map((_: any) => Math.random()));
+    setWx(wx.map((_: any) => Math.random()));
+    setWy(wy.map((_: any) => Math.random()));
   }
 
   const handleTargetValColumnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,8 +90,8 @@ function App() {
   const [csvRows, setCsvRows] = useState<Array<any>>([]);
 
   const[weightObj, setWeightObj] = useState<any>({
-    "x": wX,
-    "y": wY
+    "x": wx,
+    "y": wy
   });
 
   const dividerStyle = {
@@ -118,26 +118,24 @@ function App() {
 
   useEffect(() => {
     setWeightObj({
-      "x": wX,
-      "y": wY
+      "x": wx,
+      "y": wy
     });
-  }, [wX, wY]);
+  }, [wx, wy]);
 
   useEffect(() => {
-    const res = dataArray.map((d: any, i: number) => new Object({
+    setIrisData((currentIrisData) => dataArray.map((d: any, i: number) => new Object({
       x: getWeightedPos(d, weightObj["x"], operationX),
-      y: irisData[i]?.y
-    }));
-    setIrisData(res);
-  }, [operationX]);
+      y: currentIrisData[i]?.y
+    })));
+  }, [dataArray, weightObj, operationX]);
 
   useEffect(() => {
-    const res = dataArray.map((d: any, i: number) => new Object({
-      x: irisData[i]?.x,
+    setIrisData((currentIrisData) => dataArray.map((d: any, i: number) => new Object({
+      x: currentIrisData[i]?.x,
       y: getWeightedPos(d, weightObj["y"], operationY)
-    }));
-    setIrisData(res);
-  }, [operationY]);
+    })));
+  }, [dataArray, weightObj, operationY]);
 
   useDeepCompareEffect(() => {
     if (dataArray.length > 0) {
@@ -147,7 +145,7 @@ function App() {
       }));
       setIrisData(res);
     }
-  }, [weightObj, dataArray]);
+  }, [weightObj, dataArray, operationX, operationY]);
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
@@ -178,8 +176,8 @@ function App() {
     setDataArray(arr);
     setAttributeLabels(attributes);
 
-    setWX(attributes.map((_: any) => Math.random()));
-    setWY(attributes.map((_: any) => Math.random()));
+    setWx(attributes.map((_: any) => Math.random()));
+    setWy(attributes.map((_: any) => Math.random()));
 
     setOperationX(attributes.slice(1).map((_: any) => "+"));
     setOperationY(attributes.slice(1).map((_: any) => "+"));
@@ -262,18 +260,18 @@ function App() {
                 Weight of X Axis
               </h5>
               <WeightForm
-                data={wX}
+                data={wx}
                 attributeLabelNameList={attributeLabels}
-                handleWeightChange={setWX}
+                handleWeightChange={setWx}
               />
               <OpCodeForm
                 data={operationX}
                 handleOpeChange={setOperationX}
               />
               <WeightVis
-                data={wX}
+                data={wx}
                 attributeLabelNameList={attributeLabels}
-                handleWeightChange={setWX}
+                handleWeightChange={setWx}
               />
             </div>
             <div className="row">
@@ -281,18 +279,18 @@ function App() {
                 Weight of Y Axis
               </h5>
               <WeightForm
-                data={wY}
+                data={wy}
                 attributeLabelNameList={attributeLabels}
-                handleWeightChange={setWY}
+                handleWeightChange={setWy}
               />
               <OpCodeForm
                 data={operationY}
                 handleOpeChange={setOperationY}
               />
               <WeightVis
-                data={wY}
+                data={wy}
                 attributeLabelNameList={attributeLabels}
-                handleWeightChange={setWY}
+                handleWeightChange={setWy}
               />
             </div>
           </div>

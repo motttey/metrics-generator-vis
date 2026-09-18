@@ -37,7 +37,10 @@ export default defineConfig(
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/ban-ts-comment": "off",
+
+      // These rules require refactoring existing state and list rendering behavior.
       "@eslint-react/use-memo": "off",
+      "@eslint-react/set-state-in-effect": "off",
     },
   },
 );

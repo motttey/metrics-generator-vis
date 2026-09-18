@@ -11,6 +11,15 @@ import {
 function WeightForm (props: any): any {
   const [data, setData] = useState<Array<number>>([]);
 
+  const getWeightKey = (weight: number, position: number) => {
+    const label = props.attributeLabelNameList[position] || 'unknown';
+    const repeatedLabels = props.attributeLabelNameList
+      .slice(0, position)
+      .filter((previousLabel: string) => previousLabel === label).length;
+
+    return `${label}-${repeatedLabels}-${weight}`;
+  };
+
   useMemo(
     () => {
       setData(props?.data)
@@ -54,8 +63,8 @@ function WeightForm (props: any): any {
               {data.map((weight: number, index: number) => {
                 return (
                   <Draggable
-                    key={index}
-                    draggableId={index.toString()}
+                    key={getWeightKey(weight, index)}
+                    draggableId={getWeightKey(weight, index)}
                     index={index}
                   >
                     {(provided: DraggableProvided) => (
@@ -71,7 +80,6 @@ function WeightForm (props: any): any {
                             margin: "15px",
                             backgroundColor: "currentColor"
                           }}
-                          key={index}
                           name={index.toString()}
                           value={weight.toFixed(4)}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}

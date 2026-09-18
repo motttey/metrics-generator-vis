@@ -16,8 +16,8 @@ function LoadedData(props: LoadedDataProps): JSX.Element {
     <div id="loadedData">
       {errors.length > 0 && (
         <div className="row">
-          {errors.map((error: any, index: number) => (
-            <p key={index}>{error.message}</p>
+          {errors.map((error: any) => (
+            <p key={error.message}>{error.message}</p>
           ))}
         </div>
       )}

@@ -4,6 +4,9 @@ import { FormControl, List, ListItem, MenuItem, Select } from '@mui/material';
 
 const OPERATION_LIST = ["+", "x", "/"]
 
+const getOperationKey = (operations: string[], operation: string, position: number) =>
+  `${operation}-${operations.slice(0, position).filter((value) => value === operation).length}`;
+
 function OpCodeForm (props: any): any {
   const [operation, setOperation] = useState<Array<string>>([]);
 
@@ -46,7 +49,7 @@ function OpCodeForm (props: any): any {
       {operation.map((op: string, index: number) => {
         return (
           <ListItem
-            key={index}
+            key={getOperationKey(operation, op, index)}
           >
             <FormControl fullWidth>
               <Select
@@ -66,10 +69,10 @@ function OpCodeForm (props: any): any {
                 }}
               >
                 {
-                  OPERATION_LIST.map((code: string, i: number) => {
+                  OPERATION_LIST.map((code: string) => {
                     return (
                       <MenuItem
-                        key={i}
+                        key={code}
                         value={code}
                         onClick={() => handleSelect(code, index)}
                       >
