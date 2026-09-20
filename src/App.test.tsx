@@ -1,18 +1,18 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 import { vi, expect, test } from "vitest";
 
-vi.mock('d3');
+vi.mock("d3");
 
-vi.mock('./ScatterPlot', () => ({
+vi.mock("./ScatterPlot", () => ({
   default: () => <svg id="scatterPlot" />,
 }));
 
-vi.mock('./WeightVis', () => ({
+vi.mock("./WeightVis", () => ({
   default: () => <svg id="weightVis" />,
 }));
 
-test('renders header', () => {
+test("renders header", () => {
   render(<App />);
   const linkElementList = screen.getAllByText(/Metrics Generator/i);
   expect(linkElementList.length).toBeGreaterThan(0);

@@ -1,5 +1,11 @@
-import React from 'react';
-import { Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material';
+import React from "react";
+import {
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
 
 interface LoadedDataProps {
   errors: any[];
@@ -23,8 +29,16 @@ function LoadedData(props: LoadedDataProps): JSX.Element {
       )}
       {csvRows.length > 0 && (
         <div className="row">
-          <FormControl component="fieldset" sx={{color: "white", width: "100%"}}>
-            <FormLabel component="legend" sx={{color: "white", textAlign: "left"}}>Select Target Variable</FormLabel>
+          <FormControl
+            component="fieldset"
+            sx={{ color: "white", width: "100%" }}
+          >
+            <FormLabel
+              component="legend"
+              sx={{ color: "white", textAlign: "left" }}
+            >
+              Select Target Variable
+            </FormLabel>
             <RadioGroup
               row
               aria-label="target-variable"
@@ -33,11 +47,18 @@ function LoadedData(props: LoadedDataProps): JSX.Element {
               onChange={onTargetValColumnChange}
             >
               {csvRows.map((row: any) => (
-                <FormControlLabel 
-                  key={row.field} 
-                  value={row.field} 
-                  control={<Radio sx={{color: "white", '&.Mui-checked': {color: "white"}}}/>} 
-                  label={row.headerName} 
+                <FormControlLabel
+                  key={row.field}
+                  value={row.field}
+                  control={
+                    <Radio
+                      sx={{
+                        color: "white",
+                        "&.Mui-checked": { color: "white" },
+                      }}
+                    />
+                  }
+                  label={row.headerName}
                 />
               ))}
             </RadioGroup>

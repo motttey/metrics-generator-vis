@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import ScatterPlot from './ScatterPlot';
-import WeightForm from './WeightForm';
-import WeightVis from './WeightVis';
-import LoadedData from './loadedData';
+import React, { useState, useEffect } from "react";
+import ScatterPlot from "./ScatterPlot";
+import WeightForm from "./WeightForm";
+import WeightVis from "./WeightVis";
+import LoadedData from "./loadedData";
 
-import { Button, Divider, ThemeProvider } from '@mui/material';
+import { Button, Divider, ThemeProvider } from "@mui/material";
 // import { DataGrid } from '@mui/x-data-grid';
-import { createTheme } from '@mui/material/styles';
-import useDeepCompareEffect from 'use-deep-compare-effect';
-import Papa from 'papaparse';
+import { createTheme } from "@mui/material/styles";
+import useDeepCompareEffect from "use-deep-compare-effect";
+import Papa from "papaparse";
 
-import * as d3 from 'd3';
+import * as d3 from "d3";
 
-import './App.css';
+import "./App.css";
 
 const getOperation = (v1: number, v2: number, opCode: string) => {
   if (opCode === "+") {
@@ -24,12 +24,9 @@ const getOperation = (v1: number, v2: number, opCode: string) => {
   } else {
     return v1;
   }
-}
+};
 
-const getPosition = (
-  arr: Array<number>,
-  operation: Array<string>
-) => {
+const getPosition = (arr: Array<number>, operation: Array<string>) => {
   let result = 0.0;
   arr.forEach((v: number, i: number) => {
     if (i === 0) {
@@ -39,34 +36,39 @@ const getPosition = (
     }
   });
   return result;
-}
+};
 
 const getWeightedPos = (
   arr: Array<any>,
   w: Array<number>,
-  operation: Array<string>
+  operation: Array<string>,
 ) => {
-  return getPosition(arr.map((v: any, i: number) => v * w[i]), operation)
-}
+  return getPosition(
+    arr.map((v: any, i: number) => v * w[i]),
+    operation,
+  );
+};
 
-const iris_url = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv';
+const iris_url =
+  "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv";
 const attributeColumn = "Species";
 
 const theme = createTheme({
   palette: {
     primary: {
       main: "#ffffff",
-      contrastText: "#282c34"
-    }
-  }
-})
+      contrastText: "#282c34",
+    },
+  },
+});
 
 function App() {
   const [dataArray, setDataArray] = useState<Array<any>>([]);
   const [irisData, setIrisData] = useState<Array<any>>([]);
   const [targetValData, setTargetValData] = useState<Array<any>>([]);
   const [attributeLabels, setAttributeLabels] = useState<Array<string>>([]);
-  const [targetValColumn, setTargetValColumn] = useState<string>(attributeColumn);
+  const [targetValColumn, setTargetValColumn] =
+    useState<string>(attributeColumn);
   const [uploadedData, setUploadedData] = useState<Array<any>>([]);
 
   const [wx, setWx] = useState<Array<number>>([]);
@@ -78,9 +80,11 @@ function App() {
   const randomizeWeight = (_: any) => {
     setWx(wx.map((_: any) => Math.random()));
     setWy(wy.map((_: any) => Math.random()));
-  }
+  };
 
-  const handleTargetValColumnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTargetValColumnChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setTargetValColumn(event.target.value);
   };
 
@@ -88,20 +92,20 @@ function App() {
   const [csvColumns, setCsvColumns] = useState<Array<any>>([]);
   const [csvRows, setCsvRows] = useState<Array<any>>([]);
 
-  const[weightObj, setWeightObj] = useState<any>({
-    "x": wx,
-    "y": wy
+  const [weightObj, setWeightObj] = useState<any>({
+    x: wx,
+    y: wy,
   });
 
   const dividerStyle = {
     color: "white",
     borderColor: "white",
     borderWidth: "0.5px",
-    '&:before, &:after': {
+    "&:before, &:after": {
       borderColor: "white",
-      borderWidth: "0.5px"
-    }
-  }
+      borderWidth: "0.5px",
+    },
+  };
 
   useEffect(() => {
     const d = d3.csv(iris_url);
@@ -117,31 +121,44 @@ function App() {
 
   useEffect(() => {
     setWeightObj({
-      "x": wx,
-      "y": wy
+      x: wx,
+      y: wy,
     });
   }, [wx, wy]);
 
   useEffect(() => {
-    setIrisData((currentIrisData) => dataArray.map((d: any, i: number) => new Object({
-      x: getWeightedPos(d, weightObj["x"], operationX),
-      y: currentIrisData[i]?.y
-    })));
+    setIrisData((currentIrisData) =>
+      dataArray.map(
+        (d: any, i: number) =>
+          new Object({
+            x: getWeightedPos(d, weightObj["x"], operationX),
+            y: currentIrisData[i]?.y,
+          }),
+      ),
+    );
   }, [dataArray, weightObj, operationX]);
 
   useEffect(() => {
-    setIrisData((currentIrisData) => dataArray.map((d: any, i: number) => new Object({
-      x: currentIrisData[i]?.x,
-      y: getWeightedPos(d, weightObj["y"], operationY)
-    })));
+    setIrisData((currentIrisData) =>
+      dataArray.map(
+        (d: any, i: number) =>
+          new Object({
+            x: currentIrisData[i]?.x,
+            y: getWeightedPos(d, weightObj["y"], operationY),
+          }),
+      ),
+    );
   }, [dataArray, weightObj, operationY]);
 
   useDeepCompareEffect(() => {
     if (dataArray.length > 0) {
-      const res = dataArray.map((d: any) => new Object({
-        x: getWeightedPos(d, weightObj["x"], operationX),
-        y: getWeightedPos(d, weightObj["y"], operationY)
-      }));
+      const res = dataArray.map(
+        (d: any) =>
+          new Object({
+            x: getWeightedPos(d, weightObj["x"], operationX),
+            y: getWeightedPos(d, weightObj["y"], operationY),
+          }),
+      );
       setIrisData(res);
     }
   }, [weightObj, dataArray, operationX, operationY]);
@@ -155,11 +172,11 @@ function App() {
       complete: (results: any) => {
         setUploadedData(results.data);
         setTargetValColumn("");
-      }
+      },
     };
 
     Papa.parse(e.target.files[0], parseConfig);
-  }
+  };
 
   useDeepCompareEffect(() => {
     if (uploadedData.length === 0) return;
@@ -171,7 +188,9 @@ function App() {
       return attributes.map((attr: string) => parseFloat(d[attr]));
     });
 
-    setTargetValData(targetValColumn ? data.map((d: any) => d[targetValColumn]) : []);
+    setTargetValData(
+      targetValColumn ? data.map((d: any) => d[targetValColumn]) : [],
+    );
     setDataArray(arr);
     setAttributeLabels(attributes);
 
@@ -182,21 +201,20 @@ function App() {
     setOperationY(attributes.slice(1).map((_: any) => "+"));
 
     setCsvColumns([...data]);
-    setCsvRows([...columns.map((row: any) => ({
-      field: row,
-      headerName: row,
-      id: row,
-      width: 50
-    }))]);
-
+    setCsvRows([
+      ...columns.map((row: any) => ({
+        field: row,
+        headerName: row,
+        id: row,
+        width: 50,
+      })),
+    ]);
   }, [uploadedData, targetValColumn]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className="app-title">
-          Metrics generator
-        </h1>
+        <h1 className="app-title">Metrics generator</h1>
         <div className="container header-actions">
           <div className="row">
             <ThemeProvider theme={theme}>
@@ -211,11 +229,7 @@ function App() {
           </div>
           <div className="row">
             <ThemeProvider theme={theme}>
-              <Button
-                color="primary"
-                variant="outlined"
-                component="label"
-              >
+              <Button color="primary" variant="outlined" component="label">
                 File Upload
                 <input
                   hidden
@@ -230,7 +244,7 @@ function App() {
         </div>
       </header>
       <Divider sx={dividerStyle} textAlign="center">
-          Edit Metrics    
+        Edit Metrics
       </Divider>
       <main className="App-main">
         <div className="container target-variable-section">
@@ -247,17 +261,12 @@ function App() {
         <div className="container workspace">
           <div className="column visualisation-column">
             <div className="row">
-              <ScatterPlot
-                data={irisData}
-                labels={targetValData}
-              />
+              <ScatterPlot data={irisData} labels={targetValData} />
             </div>
           </div>
           <div className="column editor-column">
             <section className="axis-editor">
-              <h2>
-                Weight of X Axis
-              </h2>
+              <h2>Weight of X Axis</h2>
               <WeightForm
                 data={wx}
                 attributeLabelNameList={attributeLabels}
@@ -272,9 +281,7 @@ function App() {
               />
             </section>
             <section className="axis-editor">
-              <h2>
-                Weight of Y Axis
-              </h2>
+              <h2>Weight of Y Axis</h2>
               <WeightForm
                 data={wy}
                 attributeLabelNameList={attributeLabels}
@@ -293,9 +300,7 @@ function App() {
       </main>
       <Divider sx={dividerStyle}></Divider>
       <footer className="App-footer">
-        <h6>
-          Metrics generator
-        </h6>
+        <h6>Metrics generator</h6>
       </footer>
     </div>
   );
