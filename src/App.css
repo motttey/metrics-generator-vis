@@ -90,6 +90,16 @@ body {
   width: min(calc(100% - 2rem), 86rem);
 }
 
+.target-variable-section {
+  align-self: center;
+  justify-content: flex-start;
+  width: min(calc(100% - 2rem), 86rem);
+}
+
+.target-variable-section .column {
+  width: 100%;
+}
+
 .visualisation-column,
 .editor-column {
   min-width: 0;
@@ -197,10 +207,15 @@ body {
 }
 
 @media (max-width: 960px) {
-  .workspace {
+  .workspace,
+  .target-variable-section {
     flex-direction: column;
     align-items: center;
     width: min(calc(100% - 1.5rem), 72rem);
+  }
+
+  .target-variable-section {
+    align-items: flex-start;
   }
 
   .visualisation-column {

@@ -93,7 +93,7 @@ function WeightVis (props: any): any {
         })
         .attr("class", "bar")
         .style("fill", (_: any) => {
-          return d3.schemeCategory10[0]
+          return "turquoise"
         })
         .attr("stroke", "white");
 
