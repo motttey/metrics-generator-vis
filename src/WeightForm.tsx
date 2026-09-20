@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { TextField, List , ListItem } from '@mui/material';
+import { FormControl, List, ListItem, MenuItem, Select, TextField } from '@mui/material';
 import {
   DragDropContext,
   Draggable,
@@ -10,6 +10,7 @@ import {
 
 function WeightForm (props: any): any {
   const [data, setData] = useState<Array<number>>([]);
+  const operationList = ['+', 'x', '/'];
 
   const getWeightKey = (weight: number, position: number) => {
     const label = props.attributeLabelNameList[position] || 'unknown';
@@ -46,6 +47,14 @@ function WeightForm (props: any): any {
     setData(tmpData);
   }
 
+  const handleOperationChange = (operation: string, index: number) => {
+    props.handleOpeChange([
+      ...props.operation.slice(0, index),
+      operation,
+      ...props.operation.slice(index + 1)
+    ]);
+  };
+
   return (
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="weightForm">
@@ -60,10 +69,9 @@ function WeightForm (props: any): any {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {data.map((weight: number, index: number) => {
-                return (
+              {data.map((weight: number, index: number) => (
+                <React.Fragment key={getWeightKey(weight, index)}>
                   <Draggable
-                    key={getWeightKey(weight, index)}
                     draggableId={getWeightKey(weight, index)}
                     index={index}
                   >
@@ -74,11 +82,24 @@ function WeightForm (props: any): any {
                         {...provided.dragHandleProps}
                       >
                         <TextField
-                          variant="standard"
-                          style= {{
-                            width: "80px",
-                            margin: "15px",
-                            backgroundColor: "currentColor"
+                          className="weight-input"
+                          variant="outlined"
+                          size="small"
+                          type="number"
+                          inputProps={{ step: "0.0001" }}
+                          sx={{
+                            width: "calc(6rem)",
+                            '& .MuiOutlinedInput-root': {
+                              color: 'white',
+                              borderRadius: '10px',
+                              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                              '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.7)' },
+                              '&:hover fieldset': { borderColor: 'white' },
+                              '&.Mui-focused fieldset': { borderColor: 'white' },
+                            },
+                            '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.82)' },
+                            '& .MuiInputLabel-root.Mui-focused': { color: 'white' },
+                            '& input': { textAlign: 'center' },
                           }}
                           name={index.toString()}
                           value={weight.toFixed(4)}
@@ -88,8 +109,39 @@ function WeightForm (props: any): any {
                       </ListItem>
                     )}
                   </Draggable>
-                )}
-              )}
+                  {index < data.length - 1 && (
+                    <ListItem className="operation-item">
+                      <FormControl size="small">
+                        <Select
+                          className="operation-select"
+                          aria-label={`${props.attributeLabelNameList[index]} operation`}
+                          value={props.operation[index] || '+'}
+                          onChange={(event) => handleOperationChange(event.target.value, index)}
+                          sx={{
+                            color: '#fff',
+                            '& .MuiSelect-select': { color: '#fff' },
+                            '& .MuiSvgIcon-root': { color: '#fff' },
+                          }}
+                          MenuProps={{
+                            PaperProps: {
+                              sx: {
+                                color: 'white',
+                                backgroundColor: '#343942',
+                              },
+                            },
+                          }}
+                        >
+                          {operationList.map((operation) => (
+                            <MenuItem key={operation} value={operation} sx={{ color: 'white' }}>
+                              {operation}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </ListItem>
+                  )}
+                </React.Fragment>
+              ))}
               {provided.placeholder}
             </List>
           )}

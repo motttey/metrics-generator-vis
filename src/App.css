@@ -2,27 +2,44 @@ body {
     background-color: #282c34;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+#root {
+  min-width: 0;
+}
+
 .App {
   text-align: center;
 }
 
 .App-header {
-  min-height: 15vh;
+  min-height: 14vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  padding: 1.5rem 1rem;
+}
+
+.app-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .App-main {
-  min-height: 80vh;
+  min-height: 81vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  padding: 1rem;
 }
 
 .App-footer {
@@ -31,8 +48,15 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: white;
+  padding: 0.75rem 1rem;
+}
+
+.App-footer h6 {
+  margin: 0;
+  font: inherit;
+  font-weight: 500;
 }
 
 .App-link {
@@ -41,14 +65,175 @@ body {
 
 .container {
   display: flex;
+  width: min(100%, 1440px);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-actions {
+  width: auto;
+  gap: 0.5rem;
+}
+
+.header-actions .row,
+.target-variable-section .row {
+  margin: 0;
+}
+
+.workspace {
+  align-self: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  width: min(calc(100% - 2rem), 86rem);
+}
+
+.visualisation-column,
+.editor-column {
+  min-width: 0;
+}
+
+.visualisation-column {
+  flex: 1 1 28rem;
+  max-width: 44rem;
+}
+
+.editor-column {
+  flex: 1 1 38rem;
+  max-width: 72rem;
+}
+
+.axis-editor {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.axis-editor + .axis-editor {
+  margin-top: 1rem;
+}
+
+.axis-editor h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
 }
 
 .column {
-  margin: 10px 25px;
+  margin: 0;
 }
 
 .row {
-  margin: 10px 10px;
+  margin: 0;
+  min-width: 0;
+}
+
+#loadedData,
+#visContainer {
+  width: 100%;
+}
+
+.scatter-plot,
+.weight-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.weight-chart {
+  max-width: 100%;
+}
+
+.weightForm {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin: 0 !important;
+}
+
+.weightForm .MuiListItem-root {
+  flex: 0 1 auto;
+  width: auto;
+  padding: 0.25rem;
+}
+
+.weightForm .operation-item {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.operation-select {
+  min-width: 4.5rem;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.operation-select .MuiSelect-select {
+  color: white !important;
+}
+
+.operation-select:hover,
+.operation-select.Mui-focused {
+  border-color: white;
+}
+
+.operation-select .MuiSelect-select {
+  padding: 0.55rem 2rem 0.55rem 0.85rem;
+}
+
+.operation-select .MuiSvgIcon-root {
+  color: white;
+}
+
+@media (max-width: 960px) {
+  .workspace {
+    flex-direction: column;
+    align-items: center;
+    width: min(calc(100% - 1.5rem), 72rem);
+  }
+
+  .visualisation-column {
+    width: min(100%, 44rem);
+  }
+
+  .editor-column {
+    width: min(100%, 72rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .App-main {
+    padding: 0.75rem;
+  }
+
+  .visualisation-column,
+  .editor-column {
+    flex-basis: 100%;
+  }
+
+  .axis-editor {
+    padding: 0.75rem;
+  }
+
+  .weightForm {
+    justify-content: center;
+  }
+
+  .weightForm .MuiListItem-root {
+    flex: 1 1 7.5rem;
+    justify-content: center;
+  }
 }
 
 @keyframes App-logo-spin {

@@ -127,11 +127,8 @@ function WeightVis (props: any): any {
   return (
     <svg
       ref={ref}
-      style={{
-        height: "100px",
-        width: "100%",
-        maxWidth: "500px"
-      }}
+      className="weight-chart"
+      preserveAspectRatio="xMidYMid meet"
     >
       <g className="bar-plot-area" />
     </svg>

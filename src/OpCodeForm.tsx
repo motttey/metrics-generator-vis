@@ -39,11 +39,12 @@ function OpCodeForm (props: any): any {
   return (
     <List
       className="weightForm"
+      aria-label="Operation selection"
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        margin: "0 40px"
+        margin: 0
       }}
     >
       {operation.map((op: string, index: number) => {

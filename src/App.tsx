@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ScatterPlot from './ScatterPlot';
 import WeightForm from './WeightForm';
 import WeightVis from './WeightVis';
-import OpCodeForm from './OpCodeForm';
 import LoadedData from './loadedData';
 
 import { Button, Divider, ThemeProvider } from '@mui/material';
@@ -195,10 +194,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 style={{textDecoration: "underline"}}>
-          Metrics Generator
+        <h1 className="app-title">
+          Metrics generator
         </h1>
-        <div className="container">
+        <div className="container header-actions">
           <div className="row">
             <ThemeProvider theme={theme}>
               <Button
@@ -234,7 +233,7 @@ function App() {
           Edit Metrics    
       </Divider>
       <main className="App-main">
-        <div className="container">
+        <div className="container target-variable-section">
           <div className="column">
             <LoadedData
               errors={[]}
@@ -245,8 +244,8 @@ function App() {
             />
           </div>
         </div>
-        <div className="container">
-          <div className="column">
+        <div className="container workspace">
+          <div className="column visualisation-column">
             <div className="row">
               <ScatterPlot
                 data={irisData}
@@ -254,18 +253,16 @@ function App() {
               />
             </div>
           </div>
-          <div className="column">
-            <div className="row">
-              <h5>
+          <div className="column editor-column">
+            <section className="axis-editor">
+              <h2>
                 Weight of X Axis
-              </h5>
+              </h2>
               <WeightForm
                 data={wx}
                 attributeLabelNameList={attributeLabels}
                 handleWeightChange={setWx}
-              />
-              <OpCodeForm
-                data={operationX}
+                operation={operationX}
                 handleOpeChange={setOperationX}
               />
               <WeightVis
@@ -273,18 +270,16 @@ function App() {
                 attributeLabelNameList={attributeLabels}
                 handleWeightChange={setWx}
               />
-            </div>
-            <div className="row">
-              <h5>
+            </section>
+            <section className="axis-editor">
+              <h2>
                 Weight of Y Axis
-              </h5>
+              </h2>
               <WeightForm
                 data={wy}
                 attributeLabelNameList={attributeLabels}
                 handleWeightChange={setWy}
-              />
-              <OpCodeForm
-                data={operationY}
+                operation={operationY}
                 handleOpeChange={setOperationY}
               />
               <WeightVis
@@ -292,7 +287,7 @@ function App() {
                 attributeLabelNameList={attributeLabels}
                 handleWeightChange={setWy}
               />
-            </div>
+            </section>
           </div>
         </div>
       </main>

@@ -100,12 +100,8 @@ function ScatterPlot(props: any): any {
     <div id="visContainer">
       <svg
         ref={ref}
-        style={{
-          height: "100%",
-          width: "100%",
-          minWidth: "600px",
-          margin: "18% 50px 0 0"
-        }}
+        className="scatter-plot"
+        preserveAspectRatio="xMidYMid meet"
       >
         <g className="plot-area" />
       </svg>
