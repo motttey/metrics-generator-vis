@@ -27,7 +27,7 @@ body {
 }
 
 .app-title {
-  margin: 0 0 0.75rem;
+  margin: 0;
   font-size: clamp(1.5rem, 2.8vw, 2rem);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -37,7 +37,7 @@ body {
   min-height: 81vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   color: white;
   padding: 1rem;
 }
@@ -72,12 +72,14 @@ body {
   gap: 1rem;
 }
 
-.header-actions {
-  width: auto;
+.data-actions {
+  align-self: center;
+  justify-content: flex-start;
+  width: min(calc(100% - 2rem), 86rem);
   gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.header-actions .row,
 .target-variable-section .row {
   margin: 0;
 }
@@ -216,6 +218,10 @@ body {
 
   .target-variable-section {
     align-items: flex-start;
+  }
+
+  .data-actions {
+    width: min(calc(100% - 1.5rem), 72rem);
   }
 
   .visualisation-column {

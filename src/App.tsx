@@ -215,38 +215,32 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1 className="app-title">Metrics generator</h1>
-        <div className="container header-actions">
-          <div className="row">
-            <ThemeProvider theme={theme}>
-              <Button
-                color="primary"
-                variant="outlined"
-                onClick={randomizeWeight}
-              >
-                Random
-              </Button>
-            </ThemeProvider>
-          </div>
-          <div className="row">
-            <ThemeProvider theme={theme}>
-              <Button color="primary" variant="outlined" component="label">
-                File Upload
-                <input
-                  hidden
-                  type="file"
-                  accept=".csv"
-                  className="fileUploadButton"
-                  onChange={fileUploadHandler}
-                />
-              </Button>
-            </ThemeProvider>
-          </div>
-        </div>
       </header>
       <Divider sx={dividerStyle} textAlign="center">
         Edit Metrics
       </Divider>
       <main className="App-main">
+        <div className="container data-actions">
+          <ThemeProvider theme={theme}>
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={randomizeWeight}
+            >
+              Random
+            </Button>
+            <Button color="primary" variant="outlined" component="label">
+              File Upload
+              <input
+                hidden
+                type="file"
+                accept=".csv"
+                className="fileUploadButton"
+                onChange={fileUploadHandler}
+              />
+            </Button>
+          </ThemeProvider>
+        </div>
         <div className="container target-variable-section">
           <div className="column">
             <LoadedData
